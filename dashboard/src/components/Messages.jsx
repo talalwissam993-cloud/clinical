@@ -12,7 +12,7 @@ const Messages = ({ url }) => {
     const fetchMessages = async () => {
       try {
         const { data } = await axios.get(
-          url + "/api/v1/message/getall",
+          "https://clinical-backend-kh2m.onrender.com/api/v1/message/getall",
           { withCredentials: true }
         );
         setMessages(data.messages);
