@@ -21,7 +21,7 @@ import Users from "./components/Users";
 import Count from "./components/Count";
 
 const App = () => {
-  const url = "http://localhost:5000"
+  const url = "https://clinical-backend-kh2m.onrender.com"
 
   const { isAuthenticated, setIsAuthenticated, admin, setAdmin } =
     useContext(Context);
@@ -30,7 +30,7 @@ const App = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          url + "/api/v1/user/admin/me",
+          "https://clinical-backend-kh2m.onrender.com/api/v1/user/admin/me",
           {
             withCredentials: true,
           }
