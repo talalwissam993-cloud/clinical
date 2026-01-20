@@ -13,7 +13,7 @@ import axios from "axios";
 import { Context } from "./main";
 import Login from "./Pages/Login";
 const App = () => {
-  const url = "http://localhost:5000"
+  const url = "https://clinical-backend-kh2m.onrender.com"
   const { isAuthenticated, setIsAuthenticated, setUser } =
     useContext(Context);
 
