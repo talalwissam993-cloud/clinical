@@ -23,7 +23,7 @@ const AddNewAdmin = ({ url }) => {
     try {
       await axios
         .post(
-          url + "/api/v1/user/admin/addnew",
+          "https://clinical-backend-kh2m.onrender.com/api/v1/user/admin/addnew",
           { firstName, lastName, email, phone, nic, dob, gender, password },
           {
             withCredentials: true,
