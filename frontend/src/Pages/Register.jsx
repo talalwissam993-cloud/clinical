@@ -23,7 +23,7 @@ const Register = ({ url }) => {
     try {
       await axios
         .post(
-          url + "/api/v1/user/patient/register",
+          "https://clinical-backend-kh2m.onrender.com/api/v1/user/patient/register",
           { firstName, lastName, email, phone, nic, dob, gender, password },
           {
             withCredentials: true,
