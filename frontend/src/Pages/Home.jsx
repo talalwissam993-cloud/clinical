@@ -9,7 +9,10 @@ const Home = () => {
     <>
       <Hero
         title={
-          "Welcome to ZeeCare Medical Institute | Your Trusted Healthcare Provider"
+          "Welcome to Dahyat Al-Yasmin Clinic Institute | Your Trusted Healthcare Provider"
+        }
+        title2={
+          "مرحباً بكم في معهد عيادات ضاحية الياسمين | مزود الرعاية الصحية الموثوق به"
         }
         imageUrl={"/hero.png"}
       />

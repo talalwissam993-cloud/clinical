@@ -10,11 +10,12 @@ import userRouter from "./router/userRouter.js";
 import appointmentRouter from "./router/appointmentRouter.js";
 
 const app = express();
-config({ path: "./config.env" });
+config({ path: "./config/config.env" });
 
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL_ONE, process.env.FRONTEND_URL_TWO],
+    // @ts-ignore
+    origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_url],
     method: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
   })

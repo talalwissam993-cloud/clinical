@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const AppointmentForm = () => {
+const AppointmentForm = ({ url }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -19,6 +19,7 @@ const AppointmentForm = () => {
   const [hasVisited, setHasVisited] = useState(false);
 
   const departmentsArray = [
+    "Internist",
     "Pediatrics",
     "Orthopedics",
     "Cardiology",
@@ -34,7 +35,7 @@ const AppointmentForm = () => {
   useEffect(() => {
     const fetchDoctors = async () => {
       const { data } = await axios.get(
-        "http://localhost:5000/api/v1/user/doctors",
+        url + "/api/v1/user/doctors",
         { withCredentials: true }
       );
       setDoctors(data.doctors);
@@ -47,7 +48,7 @@ const AppointmentForm = () => {
     try {
       const hasVisitedBool = Boolean(hasVisited);
       const { data } = await axios.post(
-        "http://localhost:5000/api/v1/appointment/post",
+        url + "/api/v1/appointment/post",
         {
           firstName,
           lastName,
@@ -91,6 +92,7 @@ const AppointmentForm = () => {
     <>
       <div className="container form-component appointment-form">
         <h2>Appointment</h2>
+        <h2>لتحديد موعد</h2>
         <form onSubmit={handleAppointment}>
           <div>
             <input
@@ -123,7 +125,7 @@ const AppointmentForm = () => {
           <div>
             <input
               type="number"
-              placeholder="NIC"
+              placeholder="ID"
               value={nic}
               onChange={(e) => setNic(e.target.value)}
             />
@@ -217,7 +219,7 @@ const AppointmentForm = () => {
             rows="10"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            placeholder="Address"
+            placeholder="الحالة المرضية        medical condition"
           />
           <div
             style={{
@@ -227,6 +229,7 @@ const AppointmentForm = () => {
             }}
           >
             <p style={{ marginBottom: 0 }}>Have you visited before?</p>
+            <p style={{ marginBottom: 0 }}>هل زرت المكان من قبل ؟</p>
             <input
               type="checkbox"
               checked={hasVisited}
@@ -235,8 +238,8 @@ const AppointmentForm = () => {
             />
           </div>
           <button style={{ margin: "0 auto" }}>GET APPOINTMENT</button>
-        </form>
-      </div>
+        </form >
+      </div >
     </>
   );
 };

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Context } from "../main";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
-const Register = () => {
+const Register = ({ url }) => {
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
 
   const [firstName, setFirstName] = useState("");
@@ -23,7 +23,7 @@ const Register = () => {
     try {
       await axios
         .post(
-          "http://localhost:5000/api/v1/user/patient/register",
+          url + "/api/v1/user/patient/register",
           { firstName, lastName, email, phone, nic, dob, gender, password },
           {
             withCredentials: true,
@@ -57,10 +57,11 @@ const Register = () => {
       <div className="container form-component register-form">
         <h2>Sign Up</h2>
         <p>Please Sign Up To Continue</p>
+        <p>يرجى التسجيل للمتابعة</p>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat culpa
-          voluptas expedita itaque ex, totam ad quod error?
+          Please fill in all fields to contact us, stay in touch, and book appointments.
         </p>
+        <p>يؤجى تعبئة الحقول كاملة للتواصل معنا والبقاء على الاتصال وحجز المواعيد</p>
         <form onSubmit={handleRegistration}>
           <div>
             <input
@@ -126,10 +127,10 @@ const Register = () => {
           >
             <p style={{ marginBottom: 0 }}>Already Registered?</p>
             <Link
-              to={"/signin"}
+              to={"/login"}
               style={{ textDecoration: "none", color: "#271776ca" }}
             >
-              Login Now
+              Login Now سجل الدخول الآن
             </Link>
           </div>
           <div style={{ justifyContent: "center", alignItems: "center" }}>

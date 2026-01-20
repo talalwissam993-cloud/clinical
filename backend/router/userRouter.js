@@ -3,6 +3,7 @@ import {
   addNewAdmin,
   addNewDoctor,
   getAllDoctors,
+  getAllUsers,
   getUserDetails,
   login,
   logoutAdmin,
@@ -25,5 +26,7 @@ router.get("/patient/me", isPatientAuthenticated, getUserDetails);
 router.get("/admin/me", isAdminAuthenticated, getUserDetails);
 router.get("/patient/logout", isPatientAuthenticated, logoutPatient);
 router.get("/admin/logout", isAdminAuthenticated, logoutAdmin);
+router.get("/users", isAdminAuthenticated, getAllUsers)
+
 
 export default router;

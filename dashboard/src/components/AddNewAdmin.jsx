@@ -4,7 +4,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-const AddNewAdmin = () => {
+const AddNewAdmin = ({ url }) => {
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
 
   const [firstName, setFirstName] = useState("");
@@ -23,7 +23,7 @@ const AddNewAdmin = () => {
     try {
       await axios
         .post(
-          "http://localhost:5000/api/v1/user/admin/addnew",
+          url + "/api/v1/user/admin/addnew",
           { firstName, lastName, email, phone, nic, dob, gender, password },
           {
             withCredentials: true,
@@ -55,7 +55,7 @@ const AddNewAdmin = () => {
   return (
     <section className="page">
       <section className="container form-component add-admin-form">
-      <img src="/logo.png" alt="logo" className="logo"/>
+        <img src="/logo.png" alt="logo" className="logo" />
         <h1 className="form-title">ADD NEW ADMIN</h1>
         <form onSubmit={handleAddNewAdmin}>
           <div>

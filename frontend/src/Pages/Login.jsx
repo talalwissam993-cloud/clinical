@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Context } from "../main";
 import { Link, useNavigate, Navigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ url }) => {
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
 
   const [email, setEmail] = useState("");
@@ -18,7 +18,7 @@ const Login = () => {
     try {
       await axios
         .post(
-          "http://localhost:5000/api/v1/user/login",
+          url + "/api/v1/user/login",
           { email, password, confirmPassword, role: "Patient" },
           {
             withCredentials: true,
@@ -48,9 +48,9 @@ const Login = () => {
         <h2>Sign In</h2>
         <p>Please Login To Continue</p>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat culpa
-          voluptas expedita itaque ex, totam ad quod error?
+          Make your account and login to can able to appointement with our doctor and contact with us any time
         </p>
+        <p>أنشئ حسابك وسجّل الدخول لتتمكن من حجز موعد مع طبيبنا والتواصل معنا في أي وقت</p>
         <form onSubmit={handleLogin}>
           <input
             type="text"
@@ -82,7 +82,7 @@ const Login = () => {
               to={"/register"}
               style={{ textDecoration: "none", color: "#271776ca" }}
             >
-              Register Now
+              Register Now سجل معنا
             </Link>
           </div>
           <div style={{ justifyContent: "center", alignItems: "center" }}>

@@ -39,11 +39,11 @@ const Footer = () => {
 
   return (
     <>
-      <footer className={"container"}>
+      <footer className="container">
         <hr />
         <div className="content">
           <div>
-            <img src="/logo.png" alt="logo" className="logo-img"/>
+            <img src="/logo.png" alt="logo" className="logo-img" />
           </div>
           <div>
             <h4>Quick Links</h4>
@@ -54,7 +54,8 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h4>Hours</h4>
+            <h4>Opening hours</h4>
+            <h4>ساعات الدوام</h4>
             <ul>
               {hours.map((element) => (
                 <li key={element.id}>
@@ -68,15 +69,15 @@ const Footer = () => {
             <h4>Contact</h4>
             <div>
               <FaPhone />
-              <span>999-999-9999</span>
+              <span>962-799-52-7171</span>
             </div>
             <div>
               <MdEmail />
-              <span>zeelab@gmail.com</span>
+              <span>mohammedtalal@gmail.com</span>
             </div>
             <div>
               <FaLocationArrow />
-              <span>Toronto, Canada</span>
+              <span>Amman, Dahyat Al-Yasmin</span>
             </div>
           </div>
         </div>

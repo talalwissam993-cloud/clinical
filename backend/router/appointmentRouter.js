@@ -4,6 +4,7 @@ import {
   getAllAppointments,
   postAppointment,
   updateAppointmentStatus,
+  getAppointmentStats,
 } from "../controller/appointmentController.js";
 import {
   isAdminAuthenticated,
@@ -16,5 +17,6 @@ router.post("/post", isPatientAuthenticated, postAppointment);
 router.get("/getall", isAdminAuthenticated, getAllAppointments);
 router.put("/update/:id", isAdminAuthenticated, updateAppointmentStatus);
 router.delete("/delete/:id", isAdminAuthenticated, deleteAppointment);
+router.get("/getcount", isAdminAuthenticated, getAppointmentStats)
 
 export default router;

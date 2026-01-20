@@ -22,14 +22,14 @@ const userSchema = new mongoose.Schema({
   phone: {
     type: String,
     required: [true, "Phone Is Required!"],
-    minLength: [11, "Phone Number Must Contain Exact 11 Digits!"],
-    maxLength: [11, "Phone Number Must Contain Exact 11 Digits!"],
+    minLength: [10, "Phone Number Must Contain Exact 11 Digits!"],
+    maxLength: [10, "Phone Number Must Contain Exact 11 Digits!"],
   },
   nic: {
     type: String,
     required: [true, "NIC Is Required!"],
-    minLength: [13, "NIC Must Contain Only 13 Digits!"],
-    maxLength: [13, "NIC Must Contain Only 13 Digits!"],
+    minLength: [10, "NIC Must Contain Only 13 Digits!"],
+    maxLength: [10, "NIC Must Contain Only 13 Digits!"],
   },
   dob: {
     type: Date,
@@ -51,7 +51,7 @@ const userSchema = new mongoose.Schema({
     required: [true, "User Role Required!"],
     enum: ["Patient", "Doctor", "Admin"],
   },
-  doctorDepartment:{
+  doctorDepartment: {
     type: String,
   },
   docAvatar: {
@@ -73,7 +73,7 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
 
 userSchema.methods.generateJsonWebToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
-    expiresIn: process.env.JWT_EXPIRES,
+    expiresIn: process.env.JWT_EXPIRES || '7d',
   });
 };
 

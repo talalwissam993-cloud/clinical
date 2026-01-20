@@ -17,8 +17,12 @@ import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "./components/Sidebar";
 import AddNewAdmin from "./components/AddNewAdmin";
 import "./App.css";
+import Users from "./components/Users";
+import Count from "./components/Count";
 
 const App = () => {
+  const url = "http://localhost:5000"
+
   const { isAuthenticated, setIsAuthenticated, admin, setAdmin } =
     useContext(Context);
 
@@ -26,7 +30,7 @@ const App = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/v1/user/admin/me",
+          url + "/api/v1/user/admin/me",
           {
             withCredentials: true,
           }
@@ -45,12 +49,14 @@ const App = () => {
     <Router>
       <Sidebar />
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/doctor/addnew" element={<AddNewDoctor />} />
-        <Route path="/admin/addnew" element={<AddNewAdmin />} />
-        <Route path="/messages" element={<Messages />} />
-        <Route path="/doctors" element={<Doctors />} />
+        <Route path="/" element={<Dashboard url={url} />} />
+        <Route path="/login" element={<Login url={url} />} />
+        <Route path="/doctor/addnew" element={<AddNewDoctor url={url} />} />
+        <Route path="/admin/addnew" element={<AddNewAdmin url={url} />} />
+        <Route path="/messages" element={<Messages url={url} />} />
+        <Route path="/doctors" element={<Doctors url={url} />} />
+        <Route path="/users" element={<Users url={url} />} />
+        <Route path="/count" element={<Count url={url} />} />
       </Routes>
       <ToastContainer position="top-center" />
     </Router>

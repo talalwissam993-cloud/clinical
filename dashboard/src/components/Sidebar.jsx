@@ -6,6 +6,8 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { FaUserDoctor } from "react-icons/fa6";
 import { MdAddModerator } from "react-icons/md";
 import { IoPersonAddSharp } from "react-icons/io5";
+import { IoPersonSharp } from "react-icons/io5";
+import { IoCalendarSharp } from 'react-icons/io5'
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Context } from "../main";
@@ -52,6 +54,15 @@ const Sidebar = () => {
     navigateTo("/admin/addnew");
     setShow(!show);
   };
+  const gotoAllUser = () => {
+    navigateTo("/users")
+    setShow(!show);
+
+  };
+  const gotoCountPage = () => {
+    navigateTo("/count")
+    setShow(!show);
+  }
 
   return (
     <>
@@ -61,10 +72,12 @@ const Sidebar = () => {
       >
         <div className="links">
           <TiHome onClick={gotoHomePage} />
+          <IoCalendarSharp onClick={gotoCountPage} />
           <FaUserDoctor onClick={gotoDoctorsPage} />
           <MdAddModerator onClick={gotoAddNewAdmin} />
           <IoPersonAddSharp onClick={gotoAddNewDoctor} />
           <AiFillMessage onClick={gotoMessagesPage} />
+          <IoPersonSharp onClick={gotoAllUser} />
           <RiLogoutBoxFill onClick={handleLogout} />
         </div>
       </nav>

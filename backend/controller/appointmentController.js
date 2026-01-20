@@ -118,3 +118,28 @@ export const deleteAppointment = catchAsyncErrors(async (req, res, next) => {
     message: "Appointment Deleted!",
   });
 });
+
+export const getAppointmentStats = catchAsyncErrors(async (req, res, next) => {
+  const totalAppointments = await Appointment.countDocuments();
+  const pendingAppointments = await Appointment.countDocuments({ status: "Pending" });
+  const acceptedAppointments = await Appointment.countDocuments({ status: "Accepted" });
+  const rejectedAppointments = await Appointment.countDocuments({ status: "Rejected" });
+
+  // Get today's count
+  const today = new Date().setHours(0, 0, 0, 0);
+  const todayAppointments = await Appointment.countDocuments({
+    appointment_date: { $gte: today }
+  });
+
+  res.status(200).json({
+    success: true,
+    stats: {
+      total: totalAppointments,
+      pending: pendingAppointments,
+      accepted: acceptedAppointments,
+      rejected: rejectedAppointments,
+      today: todayAppointments
+
+    }
+  });
+});

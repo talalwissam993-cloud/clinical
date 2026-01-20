@@ -1,0 +1,219 @@
+.dashboard-container {
+    padding: 2.5rem;
+    background-color: #f8fafc;
+    min-height: 100vh;
+}
+
+/* Hero Section */
+.dashboard-hero {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 30px;
+    padding: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-img {
+    height: 200px;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.blue .stat-icon {
+    background: #eff6ff;
+    color: #3b82f6;
+}
+
+.purple .stat-icon {
+    background: #f5f3ff;
+    color: #8b5cf6;
+}
+
+.yellow .stat-icon {
+    background: #fffbeb;
+    color: #f59e0b;
+}
+
+.green .stat-icon {
+    background: #f0fdf4;
+    color: #22c55e;
+}
+
+/* Table Section */
+.table-card {
+    background: white;
+    border-radius: 28px;
+    padding: 2rem;
+    border: 1px solid #e2e8f0;
+}
+
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.modern-table th {
+    text-align: left;
+    padding: 1rem;
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+.modern-table td {
+    padding: 1.2rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.status-select {
+    border: none;
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.status-select.pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-select.accepted {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-select.rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+
+/* 1. Adjusting for Tablets and Small Laptops (Max 1100px) */
+@media (max-width: 1100px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* 4 columns becomes 2x2 */
+    }
+
+    .dashboard-hero {
+        padding: 2rem;
+    }
+
+    .hero-img {
+        height: 150px;
+    }
+}
+
+/* 2. Adjusting for Mobile Devices (Max 768px) */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 1rem;
+    }
+
+    /* Stack Hero Content */
+    .dashboard-hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1.5rem;
+        border-radius: 20px;
+    }
+
+    .hero-content {
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-img {
+        height: 120px;
+        margin-top: 10px;
+    }
+
+    /* Stats become full width */
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .stat-card {
+        padding: 1.2rem;
+    }
+
+    /* Table Responsiveness: Enable Horizontal Scroll */
+    .table-card {
+        padding: 1.2rem;
+        border-radius: 20px;
+        overflow-x: auto;
+        /* Adds the scrollbar if table is too wide */
+    }
+
+    .modern-table {
+        min-width: 600px;
+        /* Ensures table doesn't squash too much */
+    }
+
+    .table-header h3 {
+        font-size: 1.1rem;
+    }
+}
+
+/* 3. Small Mobile Fixes (Max 480px) */
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-subtext {
+        font-size: 0.9rem;
+    }
+
+    .stat-info h3 {
+        font-size: 1.4rem;
+    }
+}
+
+/* --- OPTIONAL: Table Scrollbar Styling --- */
+.table-card::-webkit-scrollbar {
+    height: 6px;
+}
+
+.table-card::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.table-card::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}

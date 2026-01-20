@@ -17,7 +17,7 @@ export const patientRegister = catchAsyncErrors(async (req, res, next) => {
     !gender ||
     !password
   ) {
-    return next(new ErrorHandler("Please Fill Full Form!", 400));
+    return next(new ErrorHandler("Please Fill Full Form !", 400));
   }
 
   const isRegistered = await User.findOne({ email });
@@ -185,6 +185,16 @@ export const getAllDoctors = catchAsyncErrors(async (req, res, next) => {
     doctors,
   });
 });
+
+export const getAllUsers = catchAsyncErrors(async (req, res, next) => {
+  const users = await User.find({ role: { $ne: "Doctor" } });
+  res.status(200).json({
+    success: true,
+    users,
+  });
+});
+
+
 
 export const getUserDetails = catchAsyncErrors(async (req, res, next) => {
   const user = req.user;

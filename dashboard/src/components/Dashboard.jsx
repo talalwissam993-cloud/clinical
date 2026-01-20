@@ -1,3 +1,4 @@
+// @ts-ignore
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../main";
 import { Navigate } from "react-router-dom";
@@ -6,14 +7,16 @@ import { toast } from "react-toastify";
 import { GoCheckCircleFill } from "react-icons/go";
 import { AiFillCloseCircle } from "react-icons/ai";
 
-const Dashboard = () => {
+// @ts-ignore
+const Dashboard = ({ url }) => {
   const [appointments, setAppointments] = useState([]);
+  const [time, setTime] = useState(new Date());
 
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:5000/api/v1/appointment/getall",
+          url + "/api/v1/appointment/getall",
           { withCredentials: true }
         );
         setAppointments(data.appointments);
@@ -24,26 +27,32 @@ const Dashboard = () => {
     fetchAppointments();
   }, []);
 
+  // @ts-ignore
   const handleUpdateStatus = async (appointmentId, status) => {
     try {
       const { data } = await axios.put(
-        `http://localhost:5000/api/v1/appointment/update/${appointmentId}`,
+        `${url}/api/v1/appointment/update/${appointmentId}`,
         { status },
         { withCredentials: true }
       );
+      // @ts-ignore
       setAppointments((prevAppointments) =>
         prevAppointments.map((appointment) =>
+          // @ts-ignore
           appointment._id === appointmentId
+            // @ts-ignore
             ? { ...appointment, status }
             : appointment
         )
       );
       toast.success(data.message);
     } catch (error) {
+      // @ts-ignore
       toast.error(error.response.data.message);
     }
   };
 
+  // @ts-ignore
   const { isAuthenticated, admin } = useContext(Context);
   if (!isAuthenticated) {
     return <Navigate to={"/login"} />;
@@ -71,17 +80,16 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="secondBox">
-            <p>Total Appointments</p>
-            <h3>1500</h3>
-          </div>
-          <div className="thirdBox">
-            <p>Registered Doctors</p>
-            <h3>10</h3>
+            <p>hi</p>
           </div>
         </div>
-        <div className="banner">
-          <h5>Appointments</h5>
-          <table>
+        {/* TABLE SECTION */}
+        <div className="table-card">
+          <div className="table-header">
+            <h3>Appointment Ledger</h3>
+            <span className="table-count">{appointments.length} Records</span>
+          </div>
+          <table className="modern-table">
             <thead>
               <tr>
                 <th>Patient</th>
@@ -93,46 +101,30 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {appointments && appointments.length > 0
-                ? appointments.map((appointment) => (
-                    <tr key={appointment._id}>
-                      <td>{`${appointment.firstName} ${appointment.lastName}`}</td>
-                      <td>{appointment.appointment_date.substring(0, 16)}</td>
-                      <td>{`${appointment.doctor.firstName} ${appointment.doctor.lastName}`}</td>
-                      <td>{appointment.department}</td>
-                      <td>
-                        <select
-                          className={
-                            appointment.status === "Pending"
-                              ? "value-pending"
-                              : appointment.status === "Accepted"
-                              ? "value-accepted"
-                              : "value-rejected"
-                          }
-                          value={appointment.status}
-                          onChange={(e) =>
-                            handleUpdateStatus(appointment._id, e.target.value)
-                          }
-                        >
-                          <option value="Pending" className="value-pending">
-                            Pending
-                          </option>
-                          <option value="Accepted" className="value-accepted">
-                            Accepted
-                          </option>
-                          <option value="Rejected" className="value-rejected">
-                            Rejected
-                          </option>
-                        </select>
-                      </td>
-                      <td>{appointment.hasVisited === true ? <GoCheckCircleFill className="green"/> : <AiFillCloseCircle className="red"/>}</td>
-                    </tr>
-                  ))
-                : "No Appointments Found!"}
+              {appointments.map((apt) => (
+                <tr key={apt._id}>
+                  <td className="bold-name">{apt.firstName} {apt.lastName}</td>
+                  <td>{apt.appointment_date.substring(0, 10)}</td>
+                  <td>Dr. {apt.doctor.firstName}</td>
+                  <td><span className="dept-badge">{apt.department}</span></td>
+                  <td>
+                    <select
+                      className={`status-select ${apt.status.toLowerCase()}`}
+                      value={apt.status}
+                      onChange={(e) => handleUpdateStatus(apt._id, e.target.value)}
+                    >
+                      <option value="Pending">Pending</option>
+                      <option value="Accepted">Accepted</option>
+                      <option value="Rejected">Rejected</option>
+                    </select>
+                  </td>
+                  <td className="center">
+                    {apt.hasVisited ? <GoCheckCircleFill className="green-check" /> : <AiFillCloseCircle className="red-cross" />}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
-
-          {}
         </div>
       </section>
     </>

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Context } from "../main";
 import axios from "axios";
 
-const AddNewDoctor = () => {
+const AddNewDoctor = ({ url }) => {
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
 
   const [firstName, setFirstName] = useState("");
@@ -22,6 +22,7 @@ const AddNewDoctor = () => {
   const navigateTo = useNavigate();
 
   const departmentsArray = [
+    "Internist",
     "Pediatrics",
     "Orthopedics",
     "Cardiology",
@@ -58,7 +59,7 @@ const AddNewDoctor = () => {
       formData.append("doctorDepartment", doctorDepartment);
       formData.append("docAvatar", docAvatar);
       await axios
-        .post("http://localhost:5000/api/v1/user/doctor/addnew", formData, {
+        .post(url + "/api/v1/user/doctor/addnew", formData, {
           withCredentials: true,
           headers: { "Content-Type": "multipart/form-data" },
         })
@@ -86,7 +87,7 @@ const AddNewDoctor = () => {
   return (
     <section className="page">
       <section className="container add-doctor-form">
-        <img src="/logo.png" alt="logo" className="logo"/>
+        <img src="/logo.png" alt="logo" className="logo" />
         <h1 className="form-title">REGISTER A NEW DOCTOR</h1>
         <form onSubmit={handleAddNewDoctor}>
           <div className="first-wrapper">
