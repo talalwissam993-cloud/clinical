@@ -32,7 +32,7 @@ const Sidebar = () => {
       });
   };
 
-  const navigateTo = useNavigate();
+  const navigateTo = useNavigate("/login");
 
   const gotoHomePage = () => {
     navigateTo("/");
