@@ -16,7 +16,7 @@ const Dashboard = ({ url }) => {
     const fetchAppointments = async () => {
       try {
         const { data } = await axios.get(
-          url + "/api/v1/appointment/getall",
+          "https://clinical-backend-kh2m.onrender.com/api/v1/appointment/getall",
           { withCredentials: true }
         );
         setAppointments(data.appointments);
@@ -31,7 +31,7 @@ const Dashboard = ({ url }) => {
   const handleUpdateStatus = async (appointmentId, status) => {
     try {
       const { data } = await axios.put(
-        `${url}/api/v1/appointment/update/${appointmentId}`,
+        `https://clinical-backend-kh2m.onrender.com/api/v1/appointment/update/${appointmentId}`,
         { status },
         { withCredentials: true }
       );
