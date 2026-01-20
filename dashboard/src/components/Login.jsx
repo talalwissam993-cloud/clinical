@@ -18,7 +18,7 @@ const Login = ({ url }) => {
     try {
       await axios
         .post(
-          url + "/api/v1/user/login",
+          "https://clinical-backend-kh2m.onrender.com/api/v1/user/login",
           { email, password, confirmPassword, role: "Admin" },
           {
             withCredentials: true,
