@@ -11,7 +11,7 @@ const users = ({ url }) => {
         const fetchusers = async () => {
             try {
                 const { data } = await axios.get(
-                    url + "/api/v1/user/users",
+                    "https://clinical-backend-kh2m.onrender.com/api/v1/user/users",
                     { withCredentials: true }
                 );
                 setUsers(data.users);
