@@ -16,15 +16,15 @@ const Count = ({ url }) => {
         const fetchDashboardData = async () => {
             try {
                 // 1. Fetch Appointments Table
-                const apptRes = await axios.get(`${url}/api/v1/appointment/getall`, { withCredentials: true });
+                const apptRes = await axios.get(`https://clinical-backend-kh2m.onrender.com/api/v1/appointment/getall`, { withCredentials: true });
                 setAppointments(apptRes.data.appointments);
 
                 // 2. Fetch Dynamic Stats (from your new getAppointmentStats logic)
-                const statsRes = await axios.get(`${url}/api/v1/appointment/getcount`, { withCredentials: true });
+                const statsRes = await axios.get(`https://clinical-backend-kh2m.onrender.com/api/v1/appointment/getcount`, { withCredentials: true });
                 setStats(statsRes.data.stats);
 
                 // 3. Fetch Doctor Account Count (from your new getAllDoctors logic)
-                const docRes = await axios.get(`${url}/api/v1/user/doctors`, { withCredentials: true });
+                const docRes = await axios.get(`https://clinical-backend-kh2m.onrender.com/api/v1/user/doctors`, { withCredentials: true });
                 setDoctorCount(docRes.data.doctors.length);
 
             } catch (error) {
@@ -36,7 +36,7 @@ const Count = ({ url }) => {
 
     const handleUpdateStatus = async (appointmentId, status) => {
         try {
-            const { data } = await axios.put(`${url}/api/v1/appointment/update/${appointmentId}`, { status }, { withCredentials: true });
+            const { data } = await axios.put(`https://clinical-backend-kh2m.onrender.com/api/v1/appointment/update/${appointmentId}`, { status }, { withCredentials: true });
             setAppointments((prev) => prev.map((apt) => apt._id === appointmentId ? { ...apt, status } : apt));
             toast.success(data.message);
         } catch (error) {
