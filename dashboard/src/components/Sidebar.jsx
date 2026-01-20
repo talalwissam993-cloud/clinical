@@ -25,8 +25,8 @@ const Sidebar = () => {
       })
       .then((res) => {
         toast.success(res.data.message);
-        navigateTo("/login");
-                setIsAuthenticated(false);
+window.location.href = "/login";
+        setIsAuthenticated(false);
 
       })
       .catch((err) => {
