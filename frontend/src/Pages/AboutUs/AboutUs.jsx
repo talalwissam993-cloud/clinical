@@ -1,6 +1,7 @@
 import React from "react";
-import Hero from "../components/Hero";
-import Biography from "../components/Biography";
+import Hero from "../../components/Hero/Hero";
+import "./AboutUs.css"
+import Biography from "../../components/Biography/Biography";
 const AboutUs = ({ url }) => {
   return (
     <>
@@ -10,7 +11,7 @@ const AboutUs = ({ url }) => {
         imageUrl={"/about.png"}
       />
       <Biography imageUrl={"/whoweare.png"} />
-      <hr />
+
       <div className="container map-wrapper">
 
         {/* Left Side: Information */}
@@ -41,7 +42,6 @@ const AboutUs = ({ url }) => {
           ></iframe>
         </div>
       </div>
-      <hr />
     </>
   );
 };
