@@ -608,6 +608,7 @@ nav svg {
   nav {
     min-width: 100%;
     padding: 25px 20px 40px 20px;
+        width: 100px;
   }
 }
 
