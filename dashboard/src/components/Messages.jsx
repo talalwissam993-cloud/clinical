@@ -27,6 +27,19 @@ const Messages = ({ url }) => {
     return <Navigate to={"/login"} />;
   }
 
+   const deleteMessageHandler = async (id) => {
+    try {
+      await axios.delete(`${url}/api/v1/message/delete/${id}`, {
+        withCredentials: true,
+      });
+      // Update UI by filtering out the deleted message
+      setMessages((prev) => prev.filter((message) => message._id !== id));
+      toast.success("Message Deleted");
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
   return (
     <section className="page messages">
       <div className="page-header">
@@ -49,8 +62,10 @@ const Messages = ({ url }) => {
                     <span>{element.email}</span>
                   </div>
                 </div>
-                <div className="msg-date">
-                  <button className="delete-msg-btn">
+                 <div className="msg-date">
+                  <button
+                    className="delete-msg-btn"
+                    onClick={() => deleteMessageHandler(element._id)} >
                     <IoTrashOutline />
                   </button>
                 </div>
