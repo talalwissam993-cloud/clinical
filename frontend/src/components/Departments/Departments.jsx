@@ -114,7 +114,7 @@ const Departments = () => {
   return (
     <>
       <div className="doctors-carousel-wrapper">
-        <h2>Departments <span style={{ float: "right", fontSize: "30px" }}>الأقسام</span></h2>
+        <h2>Departments</h2>
         <Carousel responsive={responsive} infinite={true} autoPlay={true}
           removeArrowOnDeviceType={[
             // "superLargeDesktop",
