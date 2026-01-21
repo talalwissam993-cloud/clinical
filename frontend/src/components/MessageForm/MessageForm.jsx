@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import "./MessageForm.css"
 
 const MessageForm = () => {
   const [firstName, setFirstName] = useState("");
@@ -34,13 +35,19 @@ const MessageForm = () => {
     }
   };
 
+
   return (
     <>
-      <div className="container form-component message-form">
-        <h2>Send Us A Message</h2>
-        <h2>أرسل لنا رسالة</h2>
+
+
+      <div className="container form-component message-form glass-card">
+        <div className="form-header">
+          <h2>Send Us A Message</h2>
+          <h2 className="arb-text" dir="rtl">أرسل لنا رسالة</h2>
+        </div>
+
         <form onSubmit={handleMessage}>
-          <div>
+          <div className="input-row">
             <input
               type="text"
               placeholder="First Name"
@@ -54,9 +61,9 @@ const MessageForm = () => {
               onChange={(e) => setLastName(e.target.value)}
             />
           </div>
-          <div>
+          <div className="input-row">
             <input
-              type="text"
+              type="email"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -69,16 +76,17 @@ const MessageForm = () => {
             />
           </div>
           <textarea
-            rows={7}
-            placeholder="Message"
+            rows={5}
+            placeholder="Your Message..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <div style={{ justifyContent: "center", alignItems: "center" }}>
-            <button type="submit">Send</button>
+          <div className="btn-container">
+            <button type="submit" className="submit-btn">Send Message</button>
           </div>
         </form>
-        <img src="/Vector.png" alt="vector" />
+
+        <img src="/Vector.png" alt="decorative background" className="bg-vector" />
       </div>
     </>
   );

@@ -1,0 +1,232 @@
+nav .navLinks {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+nav .navLinks .links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+nav .navLinks .links a {
+    text-decoration: none;
+    color: #222;
+    font-size: 18px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+nav .navLinks .links a:hover {
+    color: #9083d5;
+    /* Your purple accent */
+}
+
+/* Button Styles */
+nav .btn {
+    padding: 10px 25px;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    background: linear-gradient(135deg, #ff4757, #e60909);
+    transition: 0.3s;
+}
+
+nav .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(112, 221, 90, 0.2);
+}
+
+nav .hamburger {
+    display: none;
+    cursor: pointer;
+    font-size: 2rem;
+    color: #222;
+    z-index: 2001;
+    /* Above the mobile menu */
+}
+
+/* --- RESPONSIVE FIX --- */
+@media (max-width: 1100px) {
+    nav {
+        background: #000022;
+        /* Solid background on mobile for clarity */
+        position: fixed;
+        top: 0;
+        height: 80px;
+        padding: 0 5%;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    nav .hamburger {
+        display: block;
+        /* Show hamburger */
+    }
+
+    /* HIDDEN state */
+    nav .navLinks {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        /* Hidden off-screen to the left */
+        flex-direction: column;
+        justify-content: center;
+        background: #fff;
+        width: 100%;
+        height: 100vh;
+        transition: 0.4s ease-in-out;
+        gap: 50px;
+        z-index: 2000;
+    }
+
+    /* VISIBLE state (When 'show' is true) */
+    nav .navLinks.showmenu {
+        left: 0;
+        /* Slides into view */
+    }
+
+    nav .navLinks .links {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    nav .navLinks .links a {
+        font-size: 24px;
+        font-weight: 800;
+    }
+}
+
+@media (max-width: 650px) {
+    .logo-img {
+        width: 140px;
+    }
+}
+
+/* --- Base State (Initial/Top of Page) --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 90px;
+    padding: 0 8%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: transparent;
+    /* Sits over your Hero section */
+    transition: all 0.4s ease-in-out;
+    /* Smoothly transitions all properties below */
+}
+
+/* --- THE STICKY STATE (Active when user scrolls > 50px) --- */
+.navbar.sticky {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    /* Your Midnight Navy background */
+    height: 75px;
+    /* Shrink height slightly for a premium feel */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Change link colors to white when background is dark */
+.navbar.sticky .links a {
+    color: #000022;
+}
+
+/* Ensure the hamburger icon turns white when background is dark */
+.navbar.sticky .hamburger {
+    color: #000022;
+}
+
+/* Automatically turns a dark logo white using CSS filters */
+.navbar.sticky .logo-img {
+    filter: brightness(0) invert(1);
+    width: 150px;
+}
+
+/* --- General Elements Styling --- */
+.logo-img {
+    width: 180px;
+    transition: 0.3s;
+}
+
+.links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+.links a {
+    text-decoration: none;
+    color: #333;
+    /* Initial dark color for transparent background */
+    font-weight: 600;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.links a:hover {
+    color: #9083d5;
+    /* Your purple accent */
+}
+
+/* --- Buttons --- */
+.btn {
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s;
+}
+
+.loginBtn {
+    background: #ff4757;
+    color: white;
+}
+
+.logoutBtn {
+    background: #ff4757;
+    color: white;
+}
+
+/* --- Mobile Logic --- */
+.hamburger {
+    display: none;
+    /* Desktop hidden */
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+@media (max-width: 1100px) {
+    .hamburger {
+        display: block;
+    }
+
+    /* Ensure the mobile menu has a solid background regardless of sticky state */
+    .navLinks {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background: #fff;
+        /* Light background for mobile menu */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: 0.4s;
+        gap: 40px;
+    }
+
+    /* When show is true */
+    .navLinks.showmenu {
+        left: 0;
+    }
+}

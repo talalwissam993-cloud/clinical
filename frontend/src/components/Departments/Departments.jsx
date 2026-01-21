@@ -3,7 +3,7 @@ import "react-multi-carousel/lib/styles.css";
 
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../main";
+import { Context } from "../../main";
 import { IoPersonSharp, IoMailOutline, IoCallOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";

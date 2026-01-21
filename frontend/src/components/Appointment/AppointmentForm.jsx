@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import "./Appointment.css"
 
 const AppointmentForm = ({ url }) => {
   const [firstName, setFirstName] = useState("");
@@ -35,7 +36,7 @@ const AppointmentForm = ({ url }) => {
   useEffect(() => {
     const fetchDoctors = async () => {
       const { data } = await axios.get(
-        url + "/api/v1/user/doctors",
+        "https://clinical-backend-kh2m.onrender.com/api/v1/user/doctors",
         { withCredentials: true }
       );
       setDoctors(data.doctors);
@@ -48,7 +49,7 @@ const AppointmentForm = ({ url }) => {
     try {
       const hasVisitedBool = Boolean(hasVisited);
       const { data } = await axios.post(
-        url + "/api/v1/appointment/post",
+        "https://clinical-backend-kh2m.onrender.com/api/v1/appointment/post",
         {
           firstName,
           lastName,
@@ -166,27 +167,7 @@ const AppointmentForm = ({ url }) => {
                 );
               })}
             </select>
-            {/* <select
-              value={`${doctorFirstName} ${doctorLastName}`}
-              onChange={(e) => {
-                const [firstName, lastName] = e.target.value.split(" ");
-                setDoctorFirstName(firstName);
-                setDoctorLastName(lastName);
-              }}
-              disabled={!department}
-            >
-              <option value="">Select Doctor</option>
-              {doctors
-                .filter((doctor) => doctor.doctorDepartment === department)
-                .map((doctor, index) => (
-                  <option
-                    value={`${doctor.firstName} ${doctor.lastName}`}
-                    key={index}
-                  >
-                    {doctor.firstName} {doctor.lastName}
-                  </option>
-                ))}
-            </select> */}
+
             <select
               value={JSON.stringify({
                 firstName: doctorFirstName,

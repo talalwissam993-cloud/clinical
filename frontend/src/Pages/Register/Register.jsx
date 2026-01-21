@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
-import { Context } from "../main";
+import { Context } from "../../main";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import "./Register.css"
 
 const Register = ({ url }) => {
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
@@ -94,7 +95,7 @@ const Register = ({ url }) => {
           <div>
             <input
               type="number"
-              placeholder="NIC"
+              placeholder="Your ID"
               value={nic}
               onChange={(e) => setNic(e.target.value)}
             />
@@ -128,7 +129,7 @@ const Register = ({ url }) => {
             <p style={{ marginBottom: 0 }}>Already Registered?</p>
             <Link
               to={"/login"}
-              style={{ textDecoration: "none", color: "#271776ca" }}
+              style={{ textDecoration: "none", color: "#000022" }}
             >
               Login Now سجل الدخول الآن
             </Link>

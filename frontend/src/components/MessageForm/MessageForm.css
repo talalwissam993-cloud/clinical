@@ -1,0 +1,152 @@
+/* --- Root Section Logic --- */
+.message-form {
+    position: relative;
+    margin: 80px auto;
+    padding: 60px;
+    max-width: 900px;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(25px);
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    /* Strict Scroll Killer */
+}
+
+/* --- Typography & Colors --- */
+.form-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.form-header h2 {
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 900;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+}
+
+.form-header .arb-text {
+    color: #9083d5;
+    /* Amethyst Purple */
+    font-family: 'Cairo', sans-serif;
+    margin-top: 10px;
+}
+
+/* --- Form Elements --- */
+.message-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    position: relative;
+    z-index: 2;
+    /* Sits above vector */
+}
+
+.input-row {
+    display: flex;
+    gap: 25px;
+}
+
+.message-form input,
+.message-form textarea {
+    width: 100%;
+    padding: 18px 25px;
+    font-size: 18px;
+    border-radius: 18px;
+    border: 2px solid transparent;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+/* --- Beautiful Hover & Focus --- */
+.message-form input:hover,
+.message-form textarea:hover {
+    background: #fff;
+    border-color: #8fc0a9;
+}
+
+.message-form input:focus,
+.message-form textarea:focus {
+    outline: none;
+    background: #7ee286;
+    border-color: #9083d5;
+    box-shadow: 0 10px 25px rgba(144, 131, 213, 0.15);
+    color: #000;
+}
+
+/* --- Premium Button --- */
+.btn-container {
+    display: flex;
+    justify-content: center;
+}
+
+.submit-btn {
+    padding: 18px 60px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #9083d5 0%, #6c5ce7 100%);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 12px 24px rgba(108, 92, 231, 0.3);
+}
+
+.submit-btn:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 18px 35px rgba(108, 92, 231, 0.4);
+}
+
+/* --- Background Vector Logic --- */
+.bg-vector {
+    position: absolute;
+    top: -10%;
+    right: -15%;
+    height: 110%;
+    opacity: 0.3;
+    z-index: 1;
+    pointer-events: none;
+    animation: floatVector 12s ease-in-out infinite alternate;
+}
+
+@keyframes floatVector {
+    from {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-40px, 30px) rotate(8deg);
+    }
+}
+
+/* --- THE RESPONSIVE MAGIC --- */
+@media (max-width: 768px) {
+    .message-form {
+        margin: 20px;
+        padding: 40px 25px;
+        display: flex;
+        flex-direction: column;
+        /* Normal order for text context */
+        overflow-y: hidden;
+    }
+
+    .input-row {
+        flex-direction: column;
+        /* Stack inputs vertically */
+        gap: 20px;
+    }
+
+    .submit-btn {
+        width: 100%;
+        /* Full width on mobile */
+    }
+
+    .bg-vector {
+        height: 350px;
+        top: 20%;
+        right: -20%;
+    }
+}

@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import Hero from "../components/Hero";
-import Biography from "../components/Biography";
-import MessageForm from "../components/MessageForm";
-import Departments from "../components/Departments";
+import Hero from "../components/Hero/Hero";
+import MessageForm from "../components/MessageForm/MessageForm";
+import Departments from "../components/Departments/Departments";
+import Biography from "../components/Biography/Biography";
 
 const Home = () => {
   return (

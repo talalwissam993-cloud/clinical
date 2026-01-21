@@ -1,6 +1,6 @@
 import React from "react";
-import Hero from "../components/Hero";
-import AppointmentForm from "../components/AppointmentForm";
+import Hero from "../components/Hero/Hero";
+import AppointmentForm from "../components/Appointment/AppointmentForm";
 
 const Appointment = ({ url }) => {
   return (

@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
-import { Context } from "../main";
+import { Context } from "../../main";
 import { Link, useNavigate, Navigate } from "react-router-dom";
+import "./Login.css"
 
 const Login = ({ url }) => {
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
@@ -80,7 +81,7 @@ const Login = ({ url }) => {
             <p style={{ marginBottom: 0 }}>Not Registered?</p>
             <Link
               to={"/register"}
-              style={{ textDecoration: "none", color: "#271776ca" }}
+              style={{ textDecoration: "none", color: "#000022" }}
             >
               Register Now سجل معنا
             </Link>
