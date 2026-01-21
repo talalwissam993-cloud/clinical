@@ -1,0 +1,116 @@
+/* --- Login Form Root --- */
+.login-form {
+    max-width: 650px;
+    /* Slimmer for better focus */
+    margin: 80px auto;
+    padding: 60px 45px;
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(25px);
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.04);
+    text-align: center;
+    overflow: hidden;
+    /* Kill Scroll-Y */
+    position: relative;
+}
+
+.login-form h2 {
+    font-size: 42px;
+    font-weight: 900;
+    color: #111;
+    margin-bottom: 10px;
+}
+
+.login-form p {
+    font-size: 18px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 8px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Form Logic --- */
+.login-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* Inputs & Effects */
+.login-form input {
+    width: 100%;
+    padding: 18px 25px;
+    font-size: 16px;
+    border-radius: 18px;
+    border: 2px solid tomato;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+}
+
+.login-form input:hover {
+    background: #fff;
+    border-color: #8fc0a9;
+    /* Sage Green */
+}
+
+.login-form input:focus {
+    outline: none;
+    background: #7ee286;
+    border-color: #9083d5;
+    box-shadow: 0 10px 25px rgba(144, 131, 213, 0.15);
+    color: #000;
+}
+
+/* --- Navigation Links --- */
+.login-form a {
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+.login-form a:hover {
+    color: #9083d5 !important;
+    text-decoration: underline !important;
+}
+
+/* --- Submit Button --- */
+.login-form button {
+    padding: 18px 60px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: white;
+    font-weight: 800;
+    font-size: 18px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(108, 92, 231, 0.3);
+    transition: all 0.3s ease;
+    width: fit-content;
+    margin: 10px auto 0;
+}
+
+.login-form button:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 18px 35px rgba(108, 92, 231, 0.4);
+}
+
+/* --- THE RESPONSIVE MAGIC --- */
+@media (max-width: 700px) {
+    .login-form {
+        margin-top: 80px;
+        padding: 40px 25px;
+        border-radius: 40px;
+    }
+
+    .login-form h2 {
+        font-size: 32px;
+    }
+
+    .login-form button {
+        width: 100%;
+    }
+}

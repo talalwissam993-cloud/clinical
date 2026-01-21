@@ -1,0 +1,135 @@
+/* --- Appointment Section Root --- */
+.appointment-form {
+    max-width: 1100px;
+    margin: 80px auto;
+    padding: 60px;
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(25px);
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    /* Strict Scroll Killer */
+}
+
+.appointment-form h2 {
+    text-align: center;
+    font-size: clamp(26px, 4vw, 42px);
+    font-weight: 900;
+    color: #111;
+    margin-bottom: 5px;
+}
+
+.appointment-form h2:nth-child(2) {
+    color: #9083d5;
+    /* Amethyst Purple */
+    margin-bottom: 40px;
+}
+
+/* --- Form Layout Grid --- */
+.appointment-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.appointment-form form div {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+/* --- Beautiful Inputs, Selects & Textarea --- */
+.appointment-form input,
+.appointment-form select,
+.appointment-form textarea {
+    flex: 1;
+    padding: 16px 20px;
+    font-size: 16px;
+    border-radius: 15px;
+    border: 2px solid tomato;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    color: #333;
+}
+
+/* Hover & Focus Effects */
+.appointment-form input:hover,
+.appointment-form select:hover,
+.appointment-form textarea:hover {
+    background: #fff;
+    border-color: #8fc0a9;
+    /* Sage Green Accent */
+}
+
+.appointment-form input:focus,
+.appointment-form select:focus,
+.appointment-form textarea:focus {
+    outline: none;
+    background: #7ee286;
+    border-color: #9083d5;
+    box-shadow: 0 10px 25px rgba(144, 131, 213, 0.15);
+    color: #000;
+}
+
+/* --- Special Handling for the Checkbox Row --- */
+.visiting-row {
+    background: rgba(143, 192, 169, 0.1);
+    padding: 15px 25px;
+    border-radius: 15px;
+    margin-top: 10px;
+}
+
+.visiting-row p {
+    font-weight: 700;
+    color: #444;
+    font-size: 14px;
+}
+
+/* --- Premium Submit Button --- */
+.appointment-form button {
+    margin: 20px auto 0;
+    padding: 18px 60px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: white;
+    font-weight: 800;
+    font-size: 18px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(108, 92, 231, 0.3);
+    transition: all 0.3s ease;
+}
+
+.appointment-form button:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(108, 92, 231, 0.4);
+}
+
+/* --- THE RESPONSIVE MAGIC --- */
+@media (max-width: 850px) {
+    .appointment-form {
+        margin: 20px;
+        padding: 40px 20px;
+        overflow-y: hidden;
+    }
+
+    /* Stack all rows vertically on mobile */
+    .appointment-form form div {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    /* Keep the Visiting checkbox row as a horizontal row even on mobile */
+    .appointment-form form div.visiting-row {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .appointment-form button {
+        width: 100%;
+    }
+}

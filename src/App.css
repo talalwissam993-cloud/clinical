@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  font-family: "Montserrat", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #fff;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  /* Keeps the background still while you scroll */
+  display: flex;
+  flex-direction: column;
+  scroll-behavior: smooth;
+}
+
+
+p,
+span,
+a {
+  font-size: 20px;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: 900;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: 900;
+}
+
+h2 {
+  font-size: 32px;
+  font-weight: 900;
+}
+
+h3 {
+  font-size: 28px;
+  font-weight: 900;
+}
+
+h4 {
+  font-size: 24px;
+  font-weight: 900;
+}
+
+h5,
+h6 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+@media (max-width: 1186px) {
+  h1 {
+    font-size: 32px;
+    font-weight: 900;
+  }
+
+  h2 {
+    font-size: 30px;
+    font-weight: 900;
+  }
+}
+
+.container {
+  padding: 0 100px;
+  color: #000;
+}
+
+@media (max-width: 700px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
+.animated-image {
+  animation: moveUpDown 1s infinite alternate ease-in-out;
+}
+
+@keyframes moveUpDown {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(20px);
+  }
+}
+
+@media (max-width: 1186px) {
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .container {
+    padding: 20px 40px;
+  }
+}
+
+@media (max-width: 700px) {
+  .container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+}
