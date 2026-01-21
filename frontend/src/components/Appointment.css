@@ -1,0 +1,123 @@
+/* Main Container */
+.appointment-form {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 40px;
+    background: transparent;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Typography */
+.appointment-form h2 {
+    text-align: center;
+    font-weight: 700;
+    color: #1a2a6c;
+    margin-bottom: 5px;
+    letter-spacing: -0.5px;
+}
+
+.appointment-form h2:last-of-type {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+
+/* Form Layout */
+.appointment-form form>div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Creates a clean 2-column grid */
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+/* Inputs, Selects, and Textarea */
+.appointment-form input,
+.appointment-form select,
+.appointment-form textarea {
+    width: 100%;
+    padding: 14px 20px;
+    border: 2px solid #f1f3f5;
+    border-radius: 12px;
+    background-color: #f8f9fa;
+    font-size: 15px;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.appointment-form input:focus,
+.appointment-form select:focus,
+.appointment-form textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.1);
+}
+
+/* Full width for the textarea */
+.appointment-form textarea {
+    grid-column: span 2;
+    /* Spans across both columns */
+    resize: none;
+}
+
+/* Checkbox Section */
+.appointment-form .checkbox-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    background: #eef2f3;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 10px;
+}
+
+.appointment-form p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #444;
+}
+
+/* Button Styling - Premium Look */
+.appointment-form button {
+    display: block;
+    width: 250px;
+    padding: 16px;
+    margin: 30px auto 0;
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(41, 128, 185, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.appointment-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(41, 128, 185, 0.4);
+}
+
+.appointment-form button:active {
+    transform: translateY(0);
+}
+
+/* Responsive for Mobile */
+@media (max-width: 768px) {
+    .appointment-form form>div {
+        grid-template-columns: 1fr;
+        /* Stack inputs on mobile */
+    }
+
+    .appointment-form textarea {
+        grid-column: span 1;
+    }
+}
