@@ -35,7 +35,7 @@ const AppointmentForm = ({ url }) => {
   useEffect(() => {
     const fetchDoctors = async () => {
       const { data } = await axios.get(
-        "https://clinical-backend-kh2m.onrender.com/api/v1/user/doctors",
+        url + "/api/v1/user/doctors",
         { withCredentials: true }
       );
       setDoctors(data.doctors);
@@ -48,7 +48,7 @@ const AppointmentForm = ({ url }) => {
     try {
       const hasVisitedBool = Boolean(hasVisited);
       const { data } = await axios.post(
-        "https://clinical-backend-kh2m.onrender.com/api/v1/appointment/post",
+        url + "/api/v1/appointment/post",
         {
           firstName,
           lastName,
