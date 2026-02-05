@@ -144,10 +144,11 @@ export const getAppointmentStats = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-export const getMyAppointments = catchAsyncErrors(async (req, res, next) => {
-  // We find appointments where the email matches the logged-in user's email
+// This function gets appointments ONLY for the logged-in patient
+export const getMyPatientAppointments = catchAsyncErrors(async (req, res, next) => {
+  // Use the email from the authenticated user (req.user is set by your middleware)
   const appointments = await Appointment.find({ email: req.user.email });
-  
+
   res.status(200).json({
     success: true,
     appointments,
