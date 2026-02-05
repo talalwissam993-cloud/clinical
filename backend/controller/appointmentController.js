@@ -143,3 +143,13 @@ export const getAppointmentStats = catchAsyncErrors(async (req, res, next) => {
     }
   });
 });
+
+export const getMyAppointments = catchAsyncErrors(async (req, res, next) => {
+  // We find appointments where the email matches the logged-in user's email
+  const appointments = await Appointment.find({ email: req.user.email });
+  
+  res.status(200).json({
+    success: true,
+    appointments,
+  });
+});
