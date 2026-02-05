@@ -141,6 +141,7 @@ export const getAppointmentStats = catchAsyncErrors(async (req, res, next) => {
       today: todayAppointments
 
     }
+    
   });
 });
 
@@ -148,6 +149,20 @@ export const getAppointmentStats = catchAsyncErrors(async (req, res, next) => {
 export const getMyPatientAppointments = catchAsyncErrors(async (req, res, next) => {
   // Use the email from the authenticated user (req.user is set by your middleware)
   const appointments = await Appointment.find({ email: req.user.email });
+
+  res.status(200).json({
+    success: true,
+    appointments,
+  });
+});
+
+export const getMyAppointments = catchAsyncErrors(async (req, res, next) => {
+  // We filter by patientId to ensure users only see their own data
+  const appointments = await Appointment.find({ patientId: req.user._id });
+
+  if (!appointments || appointments.length === 0) {
+    return next(new ErrorHandler("No appointments found for this user.", 404));
+  }
 
   res.status(200).json({
     success: true,
