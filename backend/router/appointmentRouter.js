@@ -5,6 +5,7 @@ import {
   postAppointment,
   updateAppointmentStatus,
   getAppointmentStats,
+  getMyPatientAppointments,
 } from "../controller/appointmentController.js";
 import {
   isAdminAuthenticated,
