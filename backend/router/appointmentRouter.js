@@ -6,6 +6,7 @@ import {
   updateAppointmentStatus,
   getAppointmentStats,
   getMyPatientAppointments,
+  getMyAppointments,
 } from "../controller/appointmentController.js";
 import {
   isAdminAuthenticated,
@@ -20,4 +21,5 @@ router.put("/update/:id", isAdminAuthenticated, updateAppointmentStatus);
 router.delete("/delete/:id", isAdminAuthenticated, deleteAppointment);
 router.get("/getcount", isAdminAuthenticated, getAppointmentStats)
 router.get("/my-appointments",isPatientAuthenticated, getMyPatientAppointments);
+router.get("/me", isPatientAuthenticated, getMyAppointments);
 export default router;
