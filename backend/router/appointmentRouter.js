@@ -18,6 +18,5 @@ router.get("/getall", isAdminAuthenticated, getAllAppointments);
 router.put("/update/:id", isAdminAuthenticated, updateAppointmentStatus);
 router.delete("/delete/:id", isAdminAuthenticated, deleteAppointment);
 router.get("/getcount", isAdminAuthenticated, getAppointmentStats)
-router.get("/my", isPatientAuthenticated, getMyAppointments);
-
+router.get("/my-appointments", isPatientAuthenticated, getMyPatientAppointments);
 export default router;
