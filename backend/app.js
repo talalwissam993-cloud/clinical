@@ -9,6 +9,8 @@ import messageRouter from "./router/messageRouter.js";
 import userRouter from "./router/userRouter.js";
 import appointmentRouter from "./router/appointmentRouter.js";
 import wisdomRouter from "./router/wisdomRouter.js";
+import patientCardRouter from "./router/patientCardRouter.js";
+
 
 
 const app = express();
@@ -37,6 +39,8 @@ app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/appointment", appointmentRouter);
 app.use("/api/v1/wisdom", wisdomRouter);
+app.use("/api/v1/patientcard", patientCardRouter);
+
 
 
 dbConnection();
