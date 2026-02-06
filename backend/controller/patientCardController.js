@@ -62,12 +62,19 @@ export const upsertPatientCard = catchAsyncErrors(async (req, res, next) => {
 
 // 2. GET PATIENT CARD (Admin or the Patient themselves)
 export const getPatientCard = catchAsyncErrors(async (req, res, next) => {
+    // In your getPatientCard controller
+export const getPatientCard = catchAsyncErrors(async (req, res, next) => {
     const { patientId } = req.params;
 
-    // SECURITY CHECK: If the user is a patient, they can only see their OWN card.
+    // 🛡️ SAFE CHECK: Check if req.user exists FIRST
+    if (!req.user) {
+        return next(new ErrorHandler("Please login to access this resource", 401));
+    }
+
     if (req.user.role === "Patient" && req.user._id.toString() !== patientId) {
         return next(new ErrorHandler("You are not authorized to view this card.", 403));
     }
+    // ... rest of your code
 
     const card = await PatientCard.findOne({ patientId }).populate(
         "patientId",
@@ -214,4 +221,5 @@ export const getActiveReminders = catchAsyncErrors(async (req, res, next) => {
             status: med.status
         }))
     });
+
 });
