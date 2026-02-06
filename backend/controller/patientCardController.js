@@ -63,7 +63,6 @@ export const upsertPatientCard = catchAsyncErrors(async (req, res, next) => {
 // 2. GET PATIENT CARD (Admin or the Patient themselves)
 export const getPatientCard = catchAsyncErrors(async (req, res, next) => {
     // In your getPatientCard controller
-export const getPatientCard = catchAsyncErrors(async (req, res, next) => {
     const { patientId } = req.params;
 
     // 🛡️ SAFE CHECK: Check if req.user exists FIRST
@@ -223,3 +222,4 @@ export const getActiveReminders = catchAsyncErrors(async (req, res, next) => {
     });
 
 });
+
