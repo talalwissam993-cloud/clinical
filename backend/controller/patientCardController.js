@@ -64,19 +64,33 @@ export const upsertPatientCard = catchAsyncErrors(async (req, res, next) => {
 export const getPatientCard = catchAsyncErrors(async (req, res, next) => {
     const { patientId } = req.params;
 
-    // SECURITY CHECK: If the user is a patient, they can only see their OWN card.
+    // 1. Check if patientId is valid
+    if (!patientId) {
+        return next(new ErrorHandler("Patient ID is required in params", 400));
+    }
+
+    // 2. Security Check (Ensure req.user exists from isAuthenticated middleware)
+    if (!req.user) {
+        return next(new ErrorHandler("Authentication failed. User not found in request.", 401));
+    }
+
     if (req.user.role === "Patient" && req.user._id.toString() !== patientId) {
         return next(new ErrorHandler("You are not authorized to view this card.", 403));
     }
 
-    const card = await PatientCard.findOne({ patientId }).populate(
-        "patientId",
-        "firstName lastName email phone gender dob nic"
-    );
+    // 3. The Database Query
+    const card = await PatientCard.findOne({ patientId })
+        .populate("patientId", "firstName lastName email phone gender dob nic");
 
-    if (!card) return next(new ErrorHandler("Medical records not found", 404));
+    // 4. Handle Not Found
+    if (!card) {
+        return next(new ErrorHandler("Medical records not found for this user", 404));
+    }
 
-    res.status(200).json({ success: true, card });
+    res.status(200).json({ 
+        success: true, 
+        card 
+    });
 });
 
 // 3. ADD EXAMINATION (Admin Only)
@@ -215,3 +229,4 @@ export const getActiveReminders = catchAsyncErrors(async (req, res, next) => {
         }))
     });
 });
+
