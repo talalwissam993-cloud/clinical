@@ -1,25 +1,20 @@
-import mongoose from "mongoose";
-
+// models/prescriptionSchema.js
 const prescriptionSchema = new mongoose.Schema({
-    // No more ObjectId! Just a simple string name
-    patientName: {
-        type: String,
-        default: "Anonymous"
+    // Relation for data integrity
+    patientId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User", 
+        required: true
     },
+    // String for fast display on the "Lonely Page"
+    patientName: { type: String, required: true }, 
     medications: [
         {
-            name: { type: String, required: true },
-            brand: { type: String },
-            strength: { type: String },
-            qty: { type: Number, required: true },
-            dosage: { type: String, default: "As directed" },
-        },
+            name: String,
+            brand: String,
+            qty: Number,
+            dosage: String
+        }
     ],
-    status: { 
-        type: String, 
-        enum: ["Pending", "Dispensed"], 
-        default: "Pending" 
-    },
+    status: { type: String, default: "Pending" }
 }, { timestamps: true });
-
-export const Prescription = mongoose.model("Prescription", prescriptionSchema);
