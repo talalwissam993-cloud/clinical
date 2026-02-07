@@ -12,6 +12,8 @@ import wisdomRouter from "./router/wisdomRouter.js";
 import patientCardRouter from "./router/patientCardRouter.js";
 import medicineRouter from './router/medicineRoutes.js'
 import prescriptionRouter from "./router/prescriptionRouter.js";
+import clinicalRouter from "./router/clinicalRouter.js";
+
 
 const app = express();
 config({ path: "./config/config.env" });
@@ -42,6 +44,8 @@ app.use("/api/v1/wisdom", wisdomRouter);
 app.use("/api/v1/patientcard", patientCardRouter);
 app.use("/api/v1/medicine", medicineRouter);
 app.use("/api/v1/prescription", prescriptionRouter);
+app.use("/api/v1/clinical", clinicalRouter);
+
 
 dbConnection();
 
