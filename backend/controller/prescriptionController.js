@@ -21,10 +21,10 @@ export const createPrescription = catchAsyncErrors(async (req, res, next) => {
 
 // 2. GET ALL PRESCRIPTIONS (For the Lonely Admin Page)
 export const getAllPrescriptions = catchAsyncErrors(async (req, res, next) => {
-    // We populate patientId to show the name and NIC in the Admin table
+    // We no longer use .populate() because you are saving 
+    // the patientName as a simple string now.
     const prescriptions = await Prescription.find()
-        .populate("patientId", "firstName lastName nic")
-        .sort({ createdAt: -1 }); // Newest orders first
+        .sort({ createdAt: -1 }); // Keep this to show "Final Added" at the top
 
     res.status(200).json({
         success: true,
@@ -52,4 +52,5 @@ export const updatePrescriptionStatus = catchAsyncErrors(async (req, res, next) 
     });
 
 });
+
 
