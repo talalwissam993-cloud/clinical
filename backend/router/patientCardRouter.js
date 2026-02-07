@@ -9,7 +9,7 @@ const router = express.Router();
 // Here we allow both to access this specific endpoint.
 router.get("/get/:patientId", isPatientAuthenticated, controller.getPatientCard);
 // --- ADMIN ONLY ROUTES ---
-router.post("/upsert", controller.upsertPatientCard);
+router.post("/upsert",isAdminAuthenticated, controller.upsertPatientCard);
 router.get("/search/:query", controller.searchCardByNameOrNIC);
 router.delete("/delete-full/:id", isAdminAuthenticated, controller.deleteFullCard);
 
@@ -23,5 +23,6 @@ router.patch("/med/status/:cardId/:medId", isAdminAuthenticated, controller.upda
 
 router.get("/my-reminders", isPatientAuthenticated, controller.getActiveReminders);
 export default router;
+
 
 
