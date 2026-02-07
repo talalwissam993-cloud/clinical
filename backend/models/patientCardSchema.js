@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const patientCardSchema = new mongoose.Schema({
     patientId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
         required: [true, "Patient ID is required"],
         unique: true,
         index: true,
@@ -72,6 +71,5 @@ patientCardSchema.virtual('bmi').get(function () {
     }
     return undefined;
 });
-
 
 export const PatientCard = mongoose.model("PatientCard", patientCardSchema);
