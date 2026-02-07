@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 const patientCardSchema = new mongoose.Schema({
     patientId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
         required: [true, "Patient ID is required"],
         unique: true,
         index: true,
