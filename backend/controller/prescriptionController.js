@@ -53,4 +53,15 @@ export const updatePrescriptionStatus = catchAsyncErrors(async (req, res, next) 
 
 });
 
+export const getFullPrescriptionDetails = catchAsyncErrors(async (req, res) => {
+    const data = await Prescription.find()
+        .populate({
+            path: "patientId",
+            select: "firstName lastName nic dob" // Pulls these from User table
+        })
+        .sort({ createdAt: -1 });
+
+    res.status(200).json({ success: true, data });
+});
+
 
