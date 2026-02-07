@@ -3,23 +3,18 @@ import ErrorHandler from "../middlewares/error.js";
 import { Prescription } from "../models/prescriptionSchema.js";
 
 // 1. CREATE NEW PRESCRIPTION (From Mobile App)
+// backend/controllers/prescriptionController.js
 export const createPrescription = catchAsyncErrors(async (req, res, next) => {
     const { patientId, medications } = req.body;
 
+    // Simple validation
     if (!patientId || !medications || medications.length === 0) {
-        return next(new ErrorHandler("Please provide patient ID and medications", 400));
+        return next(new ErrorHandler("Missing Patient ID or Medications", 400));
     }
 
-    const prescription = await Prescription.create({
-        patientId,
-        medications
-    });
+    const prescription = await Prescription.create({ patientId, medications });
 
-    res.status(201).json({
-        success: true,
-        message: "Prescription saved successfully",
-        prescription
-    });
+    res.status(201).json({ success: true, prescription });
 });
 
 // 2. GET ALL PRESCRIPTIONS (For the Lonely Admin Page)
@@ -53,4 +48,5 @@ export const updatePrescriptionStatus = catchAsyncErrors(async (req, res, next) 
         message: "Status updated",
         prescription
     });
+
 });
