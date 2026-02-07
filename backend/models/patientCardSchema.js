@@ -66,11 +66,12 @@ const patientCardSchema = new mongoose.Schema({
 
 // BMI Virtual Calculation
 patientCardSchema.virtual('bmi').get(function () {
-    if (this.height && this.weight) {
+    if (this.height && this.height > 0 && this.weight) { // Check height > 0
         const h = this.height / 100;
         return parseFloat((this.weight / (h * h)).toFixed(2));
     }
-    return undefined;
+    return null; // Return null instead of crashing
 });
 
 export const PatientCard = mongoose.model("PatientCard", patientCardSchema);
+
