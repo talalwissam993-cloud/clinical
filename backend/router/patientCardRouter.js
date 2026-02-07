@@ -23,5 +23,4 @@ router.post("/med/add/:id", isAdminAuthenticated, controller.addMedication);
 router.patch("/med/status/:cardId/:medId", isAdminAuthenticated, controller.updateMedicationStatus);
 
 router.get("/my-reminders", isPatientAuthenticated, controller.getActiveReminders);
-
 export default router;
