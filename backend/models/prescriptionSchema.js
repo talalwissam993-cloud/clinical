@@ -1,13 +1,11 @@
 import mongoose from "mongoose";
 
 const prescriptionSchema = new mongoose.Schema({
-    // Link to the Patient (to get their name/NIC)
-    patientId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
+    // No more ObjectId! Just a simple string name
+    patientName: {
+        type: String,
+        default: "Anonymous"
     },
-    // The items from your MedicinePicker cart
     medications: [
         {
             name: { type: String, required: true },
@@ -17,11 +15,11 @@ const prescriptionSchema = new mongoose.Schema({
             dosage: { type: String, default: "As directed" },
         },
     ],
-    status: {
-        type: String,
-        enum: ["Pending", "Dispensed", "Cancelled"],
-        default: "Pending"
+    status: { 
+        type: String, 
+        enum: ["Pending", "Dispensed"], 
+        default: "Pending" 
     },
-}, { timestamps: true }); // timestamps provide the date for the Admin Panel
+}, { timestamps: true });
 
 export const Prescription = mongoose.model("Prescription", prescriptionSchema);
