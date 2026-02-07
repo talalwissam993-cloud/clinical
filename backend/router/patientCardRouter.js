@@ -19,8 +19,9 @@ router.post("/exam/add/:id", isAdminAuthenticated, controller.addExamination);
 router.delete("/exam/delete/:cardId/:examId", isAdminAuthenticated, controller.deleteExamination);
 
 // Medications
-router.post("/med/add/:id", isAdminAuthenticated, controller.addMedication);
+router.post("/med/add/:id", controller.addMedication);
 router.patch("/med/status/:cardId/:medId", isAdminAuthenticated, controller.updateMedicationStatus);
 
 router.get("/my-reminders", isPatientAuthenticated, controller.getActiveReminders);
 export default router;
+
