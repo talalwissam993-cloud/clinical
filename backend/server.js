@@ -25,32 +25,25 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log("User Connected:", socket.id);
 
-  // When a user sends a message
-// Inside your io.on("connection", (socket) => { ... })
-socket.on("send_message", async (data) => {
+  socket.on("send_message", async (data) => {
     try {
-        // 1. SAVE TO DATABASE (Using your MessageChat Schema)
-        const savedMessage = await MessageChat.create({
-            senderId: data.senderId,
-            senderName: data.senderName,
-            text: data.text,
-            time: data.time,
-        });
+      // Use 'Message' (to match your import at the top of the file)
+      const savedMessage = await Message.create({
+        senderId: data.senderId,
+        senderName: data.senderName,
+        text: data.text,
+        time: data.time,
+      });
 
-        // 2. BROADCAST TO EVERYONE (including the database ID)
-        io.emit("receive_message", savedMessage); 
+      // Broadcast the message that now contains the MongoDB _id
+      io.emit("receive_message", savedMessage); 
+      console.log("Message saved and broadcasted:", savedMessage._id);
     } catch (error) {
-        console.error("Error saving message:", error);
+      console.error("Error saving message to DB:", error);
     }
-});
+  });
 
   socket.on("disconnect", () => {
     console.log("User Disconnected", socket.id);
   });
-});
-
-// 5. Start the Server (USE server.listen, NOT app.listen)
-const PORT = process.env.PORT || 4000;
-server.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
 });
