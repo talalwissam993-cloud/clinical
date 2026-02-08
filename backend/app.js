@@ -50,7 +50,7 @@ app.use("/api/v1/medicine", medicineRouter);
 app.use("/api/v1/prescription", prescriptionRouter);
 app.use("/api/v1/clinical", clinicalRouter);
 app.use("/api/v1/hospital", hospitalRouter);
-app.use("./api/v1/messages", messageChatRouter)
+app.use("/api/v1/messages", messageChatRouter)
 
 
 dbConnection();
