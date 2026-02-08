@@ -26,11 +26,23 @@ io.on("connection", (socket) => {
   console.log("User Connected:", socket.id);
 
   // When a user sends a message
-  socket.on("send_message", (data) => {
-    // Broadcast this message to EVERYONE connected
-    // 'data' should contain: { text, senderName, senderId, time }
-    io.emit("receive_message", data);
-  });
+// Inside your io.on("connection", (socket) => { ... })
+socket.on("send_message", async (data) => {
+    try {
+        // 1. SAVE TO DATABASE (Using your MessageChat Schema)
+        const savedMessage = await MessageChat.create({
+            senderId: data.senderId,
+            senderName: data.senderName,
+            text: data.text,
+            time: data.time,
+        });
+
+        // 2. BROADCAST TO EVERYONE (including the database ID)
+        io.emit("receive_message", savedMessage); 
+    } catch (error) {
+        console.error("Error saving message:", error);
+    }
+});
 
   socket.on("disconnect", () => {
     console.log("User Disconnected", socket.id);
