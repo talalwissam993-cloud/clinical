@@ -7,6 +7,35 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server listening at port ${process.env.PORT}`);
+// 2. Create the HTTP Server using the Express 'app'
+const server = http.createServer(app);
+
+// 3. Initialize Socket.io with the HTTP Server
+const io = new Server(server, {
+  cors: {
+    origin: "*", // In production, use your frontend URL
+    methods: ["GET", "POST"],
+  },
+});
+
+// 4. Socket.io Event Logic
+io.on("connection", (socket) => {
+  console.log("User Connected:", socket.id);
+
+  // When a user sends a message
+  socket.on("send_message", (data) => {
+    // Broadcast this message to EVERYONE connected
+    // 'data' should contain: { text, senderName, senderId, time }
+    io.emit("receive_message", data);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User Disconnected", socket.id);
+  });
+});
+
+// 5. Start the Server (USE server.listen, NOT app.listen)
+const PORT = process.env.PORT || 4000;
+server.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });
