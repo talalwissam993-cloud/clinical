@@ -2,7 +2,7 @@ import app from "./app.js";
 import cloudinary from "cloudinary";
 import { Server } from "socket.io";
 import http from "http"; // <--- THIS WAS MISSING
-import { Message } from "./models/Message.js"; // Import your model to handle deletions
+import { Message } from "./models/messageChatSchema.js";
 
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
