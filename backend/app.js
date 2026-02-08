@@ -13,6 +13,8 @@ import patientCardRouter from "./router/patientCardRouter.js";
 import medicineRouter from './router/medicineRoutes.js'
 import prescriptionRouter from "./router/prescriptionRouter.js";
 import clinicalRouter from "./router/clinicalRouter.js";
+import hospitalRouter from "./router/hospitalRouter.js";
+
 
 
 const app = express();
@@ -45,6 +47,8 @@ app.use("/api/v1/patientcard", patientCardRouter);
 app.use("/api/v1/medicine", medicineRouter);
 app.use("/api/v1/prescription", prescriptionRouter);
 app.use("/api/v1/clinical", clinicalRouter);
+app.use("/api/v1/hospital", hospitalRouter);
+
 
 
 dbConnection();
