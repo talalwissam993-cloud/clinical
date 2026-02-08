@@ -127,11 +127,16 @@ export const deleteClinical = catchAsyncErrors(async (req, res, next) => {
 
 // --- GET ALL CLINICALS ---
 export const getAllClinicals = catchAsyncErrors(async (req, res, next) => {
-    // .sort({ createdAt: -1 }) puts the newest entries at the top
-    const clinicals = await Clinical.find().sort({ createdAt: -1 });
+    // 1. Find clinicals
+    // 2. .populate("doctors") fills the doctor IDs with full doctor details
+    // 3. .sort({ createdAt: -1 }) keeps the newest at the top
+    const clinicals = await Clinical.find()
+        .populate("doctors") 
+        .sort({ createdAt: -1 });
 
     res.status(200).json({
         success: true,
+        count: clinicals.length,
         clinicals,
     });
 });
