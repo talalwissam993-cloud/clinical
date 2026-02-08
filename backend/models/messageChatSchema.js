@@ -1,4 +1,4 @@
-import mongoose from "mongoose"; // Changed from require
+import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema({
     sender: {
@@ -7,7 +7,7 @@ const messageSchema = new mongoose.Schema({
         required: true,
     },
     senderName: { type: String, required: true },
-    senderId: { type: String, required: true }, // Added for easy frontend comparison
+    senderId: { type: String, required: true }, 
     text: { type: String, required: true },
     time: { type: String },
     createdAt: {
@@ -16,5 +16,5 @@ const messageSchema = new mongoose.Schema({
     },
 });
 
-// Changed from module.exports to export const
-export const Message = mongoose.model("Message", messageSchema);
+// FIX: Check if model exists in 'mongoose.models' before defining it
+export const Message = mongoose.models.Message || mongoose.model("Message", messageSchema);
