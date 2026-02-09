@@ -2,7 +2,7 @@ import app from "./app.js";
 import cloudinary from "cloudinary";
 import { Server } from "socket.io";
 import http from "http"; // <--- THIS WAS MISSING
-import { Message } from "./models/messageChatSchema.js";
+import { ChatMessage } from "./models/messageChatSchema.js";
 
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -25,23 +25,22 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log("User Connected:", socket.id);
 
-  socket.on("send_message", async (data) => {
+ socket.on("send_message", async (data) => {
     try {
-      // Use 'Message' (to match your import at the top of the file)
-      const savedMessage = await Message.create({
-        senderId: data.senderId,
-        senderName: data.senderName,
-        text: data.text,
-        time: data.time,
-      });
+        const savedMessage = await ChatMessage.create({
+            sender: data.senderId,   // MongoDB ObjectId
+            senderId: data.senderId, // String for Frontend
+            senderName: data.senderName,
+            text: data.text,
+            time: data.time,
+        });
 
-      // Broadcast the message that now contains the MongoDB _id
-      io.emit("receive_message", savedMessage); 
-      console.log("Message saved and broadcasted:", savedMessage._id);
+        io.emit("receive_message", savedMessage); 
     } catch (error) {
-      console.error("Error saving message to DB:", error);
+        // This will now only catch errors related to THIS schema
+        console.error("CHAT ERROR:", error.message);
     }
-  });
+});
 
   socket.on("disconnect", () => {
     console.log("User Disconnected", socket.id);
