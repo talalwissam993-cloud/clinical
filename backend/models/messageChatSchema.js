@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 
-const messageSchema = new mongoose.Schema({
+const messageChatSchema = new mongoose.Schema({
     sender: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        type: mongoose.Schema.Types.ObjectId, // Fixed for ES Modules
+        ref: "User", 
         required: true,
     },
     senderName: { type: String, required: true },
-    senderId: { type: String, required: true }, 
+    senderId: { type: String, required: true }, // Add this back for your Frontend logic
     text: { type: String, required: true },
     time: { type: String },
     createdAt: {
@@ -16,5 +16,5 @@ const messageSchema = new mongoose.Schema({
     },
 });
 
-// FIX: Check if model exists in 'mongoose.models' before defining it
-export const Message = mongoose.models.Message || mongoose.model("Message", messageSchema);
+// Name it ChatMessage specifically
+export const ChatMessage = mongoose.models.ChatMessage || mongoose.model("ChatMessage", messageChatSchema);
