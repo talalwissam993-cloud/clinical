@@ -13,8 +13,10 @@ const messageChatSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
+        expires: 604800,
     },
 });
 
 // Name it ChatMessage specifically
 export const ChatMessage = mongoose.models.ChatMessage || mongoose.model("ChatMessage", messageChatSchema);
+
