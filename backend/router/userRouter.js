@@ -26,7 +26,7 @@ router.get("/patient/me", isPatientAuthenticated, getUserDetails);
 router.get("/admin/me", isAdminAuthenticated, getUserDetails);
 router.get("/patient/logout", isPatientAuthenticated, logoutPatient);
 router.get("/admin/logout", isAdminAuthenticated, logoutAdmin);
-router.get("/users", isAdminAuthenticated, getAllUsers)
+router.get("/users", getAllUsers)
 
 
 export default router;
