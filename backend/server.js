@@ -47,3 +47,11 @@ io.on("connection", (socket) => {
     console.log("User Disconnected", socket.id);
   });
 });
+
+// 5. Start the Server with Render-friendly Port Binding
+const PORT = process.env.PORT || 4000;
+
+// Adding "0.0.0.0" tells Render to accept external traffic
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server listening on port ${PORT}`);
+});
