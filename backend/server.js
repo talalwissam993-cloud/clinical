@@ -22,25 +22,37 @@ const io = new Server(server, {
 });
 
 // 4. Socket.io Event Logic
+// ... existing connection logic ...
 io.on("connection", (socket) => {
   console.log("User Connected:", socket.id);
 
- socket.on("send_message", async (data) => {
+  // 1. Existing Send Message Logic
+  socket.on("send_message", async (data) => {
     try {
-        const savedMessage = await ChatMessage.create({
-            sender: data.senderId,   // MongoDB ObjectId
-            senderId: data.senderId, // String for Frontend
-            senderName: data.senderName,
-            text: data.text,
-            time: data.time,
-        });
-
-        io.emit("receive_message", savedMessage); 
+      const savedMessage = await ChatMessage.create({
+        sender: data.senderId,
+        senderId: data.senderId,
+        senderName: data.senderName,
+        text: data.text,
+        time: data.time,
+      });
+      io.emit("receive_message", savedMessage);
     } catch (error) {
-        // This will now only catch errors related to THIS schema
-        console.error("CHAT ERROR:", error.message);
+      console.error("CHAT ERROR:", error.message);
     }
-});
+  });
+
+  // 2. NEW: Admin/User Delete Logic
+  socket.on("delete_message", async (messageId) => {
+    try {
+      await ChatMessage.findByIdAndDelete(messageId);
+      // Broadcast the deletion so it disappears for everyone instantly
+      io.emit("message_deleted", messageId);
+      console.log("Message deleted:", messageId);
+    } catch (error) {
+      console.error("DELETE ERROR:", error.message);
+    }
+  });
 
   socket.on("disconnect", () => {
     console.log("User Disconnected", socket.id);
