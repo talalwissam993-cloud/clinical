@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Email Is Required!"],
     validate: [validator.isEmail, "Provide A Valid Email!"],
+    unique: true,
   },
   phone: {
     type: String,
@@ -49,7 +50,7 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     required: [true, "User Role Required!"],
-    enum: ["Patient", "Doctor", "Admin"],
+    enum: ["Patient", "Doctor", "Admin", "Nurse"],
   },
   doctorDepartment: {
     type: String,
@@ -76,5 +77,7 @@ userSchema.methods.generateJsonWebToken = function () {
     expiresIn: process.env.JWT_EXPIRES || '7d',
   });
 };
+
+
 
 export const User = mongoose.model("User", userSchema);
