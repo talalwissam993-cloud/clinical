@@ -33,7 +33,7 @@ router.get("/users", getAllUsers)
 router.delete("/doctor/delete/:id", isAdminAuthenticated, deleteDoctor);
 
 router.post("/nurse/addnew", isAdminAuthenticated, addNewNurse);
-router.get("/nurses", isAdminAuthenticated, getAllNurses);
+router.get("/nurses", getAllNurses);
 router.delete("/nurse/delete/:id", isAdminAuthenticated, deleteNurse);
 router.put("/nurse/update/:id", isAdminAuthenticated, updateNurseStatus);
 export default router;
