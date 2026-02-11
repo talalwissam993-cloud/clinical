@@ -3,6 +3,7 @@ import { User } from "../models/userSchema.js";
 import ErrorHandler from "../middlewares/error.js";
 import { generateToken } from "../utils/jwtToken.js";
 import cloudinary from "cloudinary";
+import { Nurse } from "../models/nurseSchema.js";
 
 export const patientRegister = catchAsyncErrors(async (req, res, next) => {
   const { firstName, lastName, email, phone, nic, dob, gender, password } =
@@ -230,6 +231,28 @@ export const logoutPatient = catchAsyncErrors(async (req, res, next) => {
       success: true,
       message: "Patient Logged Out Successfully.",
     });
+});
+
+// NEW: Delete Doctor Function
+export const deleteDoctor = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  const doctor = await User.findById(id);
+
+  if (!doctor) {
+    return next(new ErrorHandler("Doctor Not Found!", 404));
+  }
+
+  // Optional: If you want to ensure only doctors are deleted via this route
+  if (doctor.role !== "Doctor") {
+    return next(new ErrorHandler("User is not a doctor!", 400));
+  }
+
+  await doctor.deleteOne();
+
+  res.status(200).json({
+    success: true,
+    message: "Doctor Deleted Successfully!",
+  });
 });
 
 // Nurse Controller 
