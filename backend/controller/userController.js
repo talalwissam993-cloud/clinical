@@ -4,6 +4,7 @@ import ErrorHandler from "../middlewares/error.js";
 import { generateToken } from "../utils/jwtToken.js";
 import cloudinary from "cloudinary";
 import { Nurse } from "../models/nurseSchema.js";
+import { Doctor } from "../models/doctorSchema.js"; // <--- ADD THIS LINE
 
 export const patientRegister = catchAsyncErrors(async (req, res, next) => {
   const { firstName, lastName, email, phone, nic, dob, gender, password } =
@@ -109,81 +110,88 @@ export const addNewDoctor = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Doctor Avatar Required!", 400));
   }
   const { docAvatar } = req.files;
-  const allowedFormats = ["image/png", "image/jpeg", "image/webp"];
-  if (!allowedFormats.includes(docAvatar.mimetype)) {
-    return next(new ErrorHandler("File Format Not Supported!", 400));
-  }
+
   const {
-    firstName,
-    lastName,
-    email,
-    phone,
-    nic,
-    dob,
-    gender,
-    password,
-    doctorDepartment,
+    firstName, lastName, email, phone, nic, dob, gender, password,
+    doctorLicenseNumber, qualification, doctorDepartment, shift, emergencyContact,
+    assignedHospital
   } = req.body;
-  if (
-    !firstName ||
-    !lastName ||
-    !email ||
-    !phone ||
-    !nic ||
-    !dob ||
-    !gender ||
-    !password ||
-    !doctorDepartment ||
-    !docAvatar
-  ) {
+
+  // 1. Validation for ALL professional and personal fields
+  if (!firstName || !lastName || !email || !phone || !nic || !dob || !gender ||
+    !password || !doctorLicenseNumber || !qualification || !doctorDepartment ||
+    !shift || !emergencyContact || !assignedHospital) {
     return next(new ErrorHandler("Please Fill Full Form!", 400));
   }
+
   const isRegistered = await User.findOne({ email });
   if (isRegistered) {
-    return next(
-      new ErrorHandler("Doctor With This Email Already Exists!", 400)
-    );
+    return next(new ErrorHandler("Doctor with this email already exists!", 400));
   }
-  const cloudinaryResponse = await cloudinary.uploader.upload(
-    docAvatar.tempFilePath
-  );
+
+  const cloudinaryResponse = await cloudinary.uploader.upload(docAvatar.tempFilePath);
   if (!cloudinaryResponse || cloudinaryResponse.error) {
-    console.error(
-      "Cloudinary Error:",
-      cloudinaryResponse.error || "Unknown Cloudinary error"
-    );
-    return next(
-      new ErrorHandler("Failed To Upload Doctor Avatar To Cloudinary", 500)
-    );
+    return next(new ErrorHandler("Failed To Upload Doctor Avatar", 500));
   }
-  const doctor = await User.create({
-    firstName,
-    lastName,
-    email,
-    phone,
-    nic,
-    dob,
-    gender,
-    password,
+
+  // 2. Create the base User first (Role: Doctor)
+  const user = await User.create({
+    firstName, lastName, email, phone, nic, dob, gender, password,
     role: "Doctor",
-    doctorDepartment,
     docAvatar: {
       public_id: cloudinaryResponse.public_id,
       url: cloudinaryResponse.secure_url,
     },
   });
+
+  // 3. Create the Doctor Profile linked to User and Hospital
+  const doctor = await Doctor.create({
+    user: user._id,
+    hospital: assignedHospital,
+    doctorLicenseNumber,
+    qualification,
+    department: doctorDepartment,
+    emergencyContact,
+    shift
+  });
+
   res.status(200).json({
     success: true,
-    message: "New Doctor Registered",
+    message: "New Doctor Registered Successfully",
     doctor,
   });
 });
 
+// UPDATED: Fetches from the Doctor collection to get professional details
 export const getAllDoctors = catchAsyncErrors(async (req, res, next) => {
-  const doctors = await User.find({ role: "Doctor" });
+  const doctors = await Doctor.find()
+    .populate("user", "firstName lastName email phone docAvatar") // Personal details from User
+    .populate("hospital", "name"); // Hospital name from Hospital
+
   res.status(200).json({
     success: true,
     doctors,
+  });
+});
+
+// UPDATED: Deletes both the Profile and the User account
+export const deleteDoctor = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params; // This is the Doctor profile ID
+  const doctorProfile = await Doctor.findById(id);
+
+  if (!doctorProfile) {
+    return next(new ErrorHandler("Doctor Profile Not Found!", 404));
+  }
+
+  const userId = doctorProfile.user;
+
+  // Delete the profile first, then the user
+  await doctorProfile.deleteOne();
+  await User.findByIdAndDelete(userId);
+
+  res.status(200).json({
+    success: true,
+    message: "Doctor Profile and User Account Deleted Successfully!",
   });
 });
 
@@ -233,27 +241,6 @@ export const logoutPatient = catchAsyncErrors(async (req, res, next) => {
     });
 });
 
-// NEW: Delete Doctor Function
-export const deleteDoctor = catchAsyncErrors(async (req, res, next) => {
-  const { id } = req.params;
-  const doctor = await User.findById(id);
-
-  if (!doctor) {
-    return next(new ErrorHandler("Doctor Not Found!", 404));
-  }
-
-  // Optional: If you want to ensure only doctors are deleted via this route
-  if (doctor.role !== "Doctor") {
-    return next(new ErrorHandler("User is not a doctor!", 400));
-  }
-
-  await doctor.deleteOne();
-
-  res.status(200).json({
-    success: true,
-    message: "Doctor Deleted Successfully!",
-  });
-});
 
 // Nurse Controller 
 export const addNewNurse = catchAsyncErrors(async (req, res, next) => {
