@@ -9,11 +9,14 @@ import {
   logoutAdmin,
   logoutPatient,
   patientRegister,
+  deleteDoctor,
 } from "../controller/userController.js";
 import {
   isAdminAuthenticated,
   isPatientAuthenticated,
 } from "../middlewares/auth.js";
+import { addNewNurse, getAllNurses, deleteNurse, updateNurseStatus } from "../controller/userController.js";
+
 
 const router = express.Router();
 
@@ -27,6 +30,10 @@ router.get("/admin/me", isAdminAuthenticated, getUserDetails);
 router.get("/patient/logout", isPatientAuthenticated, logoutPatient);
 router.get("/admin/logout", isAdminAuthenticated, logoutAdmin);
 router.get("/users", getAllUsers)
+router.delete("/doctor/delete/:id", isAdminAuthenticated, deleteDoctor);
 
-
+router.post("/nurse/addnew", isAdminAuthenticated, addNewNurse);
+router.get("/nurses", isAdminAuthenticated, getAllNurses);
+router.delete("/nurse/delete/:id", isAdminAuthenticated, deleteNurse);
+router.put("/nurse/update/:id", isAdminAuthenticated, updateNurseStatus);
 export default router;
