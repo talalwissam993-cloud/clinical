@@ -231,3 +231,115 @@ export const logoutPatient = catchAsyncErrors(async (req, res, next) => {
       message: "Patient Logged Out Successfully.",
     });
 });
+
+// Nurse Controller 
+export const addNewNurse = catchAsyncErrors(async (req, res, next) => {
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return next(new ErrorHandler("Nurse Avatar Required!", 400));
+  }
+  const { docAvatar } = req.files;
+
+  const {
+    firstName, lastName, email, phone, nic, dob, gender, password,
+    nurseLicenseNumber, qualification, department, shift, emergencyContact,
+    assignedHospital // 1. ADD THIS: This matches your frontend formData key
+  } = req.body;
+
+  // 2. UPDATE VALIDATION: Add assignedHospital to the check
+  if (!firstName || !lastName || !email || !phone || !nic || !dob || !gender ||
+    !password || !nurseLicenseNumber || !qualification || !department ||
+    !shift || !emergencyContact || !assignedHospital) {
+    return next(new ErrorHandler("Please Fill Full Form!", 400));
+  }
+
+  const isRegistered = await User.findOne({ email });
+  if (isRegistered) {
+    return next(new ErrorHandler("User already Registered!", 400));
+  }
+
+  const cloudinaryResponse = await cloudinary.uploader.upload(docAvatar.tempFilePath);
+  if (!cloudinaryResponse || cloudinaryResponse.error) {
+    return next(new ErrorHandler("Cloudinary Upload Failed!", 500));
+  }
+
+  const user = await User.create({
+    firstName, lastName, email, phone, nic, dob, gender, password,
+    role: "Nurse",
+    docAvatar: {
+      public_id: cloudinaryResponse.public_id,
+      url: cloudinaryResponse.secure_url
+    }
+  });
+
+  // 3. UPDATE NURSE CREATE: Pass the hospital ID to the database
+  const nurse = await Nurse.create({
+    user: user._id,
+    hospital: assignedHospital, // Links the nurse to the hospital in DB
+    nurseLicenseNumber,
+    qualification,
+    department,
+    shift,
+    emergencyContact
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "New Nurse Registered!",
+    nurse
+  });
+});
+
+// SHOW ALL NURSES
+export const getAllNurses = catchAsyncErrors(async (req, res, next) => {
+  // .populate('user') fetches the firstName, lastName, and docAvatar
+  // .populate('hospital') fetches the name of the assigned facility
+  const nurses = await Nurse.find()
+    .populate("user", "firstName lastName email docAvatar")
+    .populate("hospital", "name");
+
+  res.status(200).json({
+    success: true,
+    nurses,
+  });
+});
+// DELETE NURSE
+export const deleteNurse = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params; // This is the Nurse ID
+  const nurse = await Nurse.findById(id);
+
+  if (!nurse) {
+    return next(new ErrorHandler("Nurse Not Found!", 404));
+  }
+
+  // Delete both the Nurse profile and the associated User account
+  const userId = nurse.user;
+  await nurse.deleteOne();
+  await User.findByIdAndDelete(userId);
+
+  res.status(200).json({
+    success: true,
+    message: "Nurse and User Account Deleted!",
+  });
+});
+
+// UPDATE NURSE (Shift or Status)
+export const updateNurseStatus = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  let nurse = await Nurse.findById(id);
+
+  if (!nurse) {
+    return next(new ErrorHandler("Nurse Not Found!", 404));
+  }
+
+  nurse = await Nurse.findByIdAndUpdate(id, req.body, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Nurse Details Updated!",
+    nurse,
+  });
+});
