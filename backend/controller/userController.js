@@ -5,6 +5,8 @@ import { generateToken } from "../utils/jwtToken.js";
 import cloudinary from "cloudinary";
 import { Nurse } from "../models/nurseSchema.js";
 import { Doctor } from "../models/doctorSchema.js"; // <--- ADD THIS LINE
+import { Chemist } from "../models/chemistSchema.js";
+
 
 export const patientRegister = catchAsyncErrors(async (req, res, next) => {
   const { firstName, lastName, email, phone, nic, dob, gender, password } =
