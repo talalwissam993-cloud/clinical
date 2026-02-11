@@ -353,3 +353,114 @@ export const updateNurseStatus = catchAsyncErrors(async (req, res, next) => {
     nurse,
   });
 });
+
+// Chemist 
+
+export const addNewChemist = catchAsyncErrors(async (req, res, next) => {
+  console.log("Request Body:", req.body); // Check your terminal!
+  console.log("Request Files:", req.files);
+  // 1. Check if file exists
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return next(new ErrorHandler("Chemist Avatar Required!", 400));
+  }
+  const { docAvatar } = req.files;
+
+  // 2. Destructure fields (Check names against frontend append() names)
+  const {
+    firstName, lastName, email, phone, nic, dob, gender, password,
+    pharmacyLicenseNumber, qualification, shift, emergencyContact,
+    assignedHospital // <--- MUST MATCH THE FRONTEND APPEND NAME
+  } = req.body;
+
+  // 3. Validation Check
+  if (!firstName || !lastName || !email || !phone || !nic || !dob ||
+    !gender || !password || !pharmacyLicenseNumber || !qualification ||
+    !shift || !emergencyContact || !assignedHospital) {
+    return next(new ErrorHandler("Please Fill Full Form!", 400));
+  }
+  const isRegistered = await User.findOne({ email });
+  if (isRegistered) {
+    return next(new ErrorHandler("User already Registered!", 400));
+  }
+
+  const cloudinaryResponse = await cloudinary.uploader.upload(docAvatar.tempFilePath);
+  if (!cloudinaryResponse || cloudinaryResponse.error) {
+    return next(new ErrorHandler("Cloudinary Upload Failed!", 500));
+  }
+
+  const user = await User.create({
+    firstName, lastName, email, phone, nic, dob, gender, password,
+    role: "Chemist",
+    docAvatar: {
+      public_id: cloudinaryResponse.public_id,
+      url: cloudinaryResponse.secure_url
+    }
+  });
+
+  const chemist = await Chemist.create({
+    user: user._id,
+    hospital: assignedHospital,
+    pharmacyLicenseNumber,
+    qualification,
+    shift,
+    emergencyContact
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "New Chemist Registered!",
+    chemist
+  });
+});
+// GET ALL CHEMISTS
+export const getAllChemists = catchAsyncErrors(async (req, res, next) => {
+  const chemists = await Chemist.find()
+    .populate("user", "firstName lastName email docAvatar")
+    .populate("hospital", "name");
+
+  res.status(200).json({
+    success: true,
+    chemists,
+  });
+});
+
+// UPDATE CHEMIST
+export const updateChemistStatus = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  let chemist = await Chemist.findById(id);
+
+  if (!chemist) {
+    return next(new ErrorHandler("Chemist Not Found!", 404));
+  }
+
+  chemist = await Chemist.findByIdAndUpdate(id, req.body, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Chemist Details Updated!",
+    chemist,
+  });
+});
+
+// DELETE CHEMIST
+export const deleteChemist = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  const chemist = await Chemist.findById(id);
+
+  if (!chemist) {
+    return next(new ErrorHandler("Chemist Not Found!", 404));
+  }
+
+  const userId = chemist.user;
+  await chemist.deleteOne();
+  await User.findByIdAndDelete(userId);
+
+  res.status(200).json({
+    success: true,
+    message: "Chemist and User Account Deleted!",
+  });
+});
