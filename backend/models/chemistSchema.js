@@ -12,6 +12,20 @@ const chemistSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+     department: {
+        type: String,
+        required: false,
+        enum: ["ICU", "Emergency", "Pediatrics", "General Ward", "Operation Theater", "Internist",
+            "Pediatrics",
+            "Orthopedics",
+            "Cardiology",
+            "Neurology",
+            "Oncology",
+            "Radiology",
+            "Physical Therapy",
+            "Dermatology",
+            "ENT",]
+    },
     qualification: {
         type: String,
         required: true,
@@ -38,5 +52,6 @@ const chemistSchema = new mongoose.Schema({
     },
     emergencyContact: { type: String, required: true }
 }, { timestamps: true });
+
 
 export const Chemist = mongoose.model("Chemist", chemistSchema);
