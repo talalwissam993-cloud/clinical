@@ -31,13 +31,13 @@ router.post("/doctor/addnew", addNewDoctor);
 router.get("/doctors", getAllDoctors);
 router.delete("/doctor/delete/:id", isAdminAuthenticated, deleteDoctor);
 
-router.post("/nurse/addnew", isAdminAuthenticated, addNewNurse);
+router.post("/nurse/addnew", addNewNurse);
 router.get("/nurses", getAllNurses);
 router.delete("/nurse/delete/:id", isAdminAuthenticated, deleteNurse);
 router.put("/nurse/update/:id", isAdminAuthenticated, updateNurseStatus);
 
 // Register a new chemist (Admin Only)
-router.post("/chemist/addnew", isAdminAuthenticated, addNewChemist);
+router.post("/chemist/addnew", addNewChemist);
 
 // Fetch all chemists for the dashboard
 router.get("/chemists", getAllChemists);
