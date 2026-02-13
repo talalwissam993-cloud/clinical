@@ -27,18 +27,26 @@ io.on("connection", (socket) => {
   console.log("User Connected:", socket.id);
 
   // 1. Existing Send Message Logic
- socket.on("send_message", async (data) => {
+// socket.current.emit("send_message", {...}) sends data here:
+socket.on("send_message", async (data) => {
     try {
+      // Destructure role from data sent by the mobile app
+      const { senderId, senderName, role, text, time } = data;
+
       const savedMessage = await ChatMessage.create({
-        sender: data.senderId, // Matches the ObjectId ref
-        senderId: data.senderId,
-        senderName: data.senderName,
-        role: data.role,      // <--- ADD THIS LINE
-        text: data.text,
-        time: data.time,
+        sender: senderId,   // This maps to the ObjectId in your schema
+        senderId: senderId, 
+        senderName: senderName,
+        role: role,         // ✅ THIS WAS MISSING - NOW IT MEETS VALIDATION
+        text: text,
+        time: time,
       });
+
+      // Broadcast the saved message (now including the role) to everyone
       io.emit("receive_message", savedMessage);
+      
     } catch (error) {
+      // This is where your "Path role is required" error was being logged
       console.error("CHAT ERROR:", error.message);
     }
 });
