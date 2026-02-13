@@ -2,29 +2,31 @@ import { ChatMessage } from "../models/messageChatSchema.js";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
 import ErrorHandler from "../middlewares/error.js";
 
-export const getAllMessages = async (req, res, next) => {
-    try {
-        const messages = await ChatMessage.find().sort({ createdAt: 1 });
-        res.status(200).json({
-            success: true,
-            messages,
-        });
-    } catch (error) {
-        next(error);
-    }
-};
+// 1. Get all messages (Now role-agnostic)
+export const getAllMessages = catchAsyncErrors(async (req, res, next) => {
+    // We sort by createdAt to ensure the chat history is in the right order
+    const messages = await ChatMessage.find().sort({ createdAt: 1 });
+    
+    res.status(200).json({
+        success: true,
+        messages,
+    });
+});
 
-// Note: Post messages are usually handled via Socket for real-time, 
-// but we keep a REST method as a backup.
+// 2. Send message (REST Backup)
 export const sendMessage = catchAsyncErrors(async (req, res, next) => {
     const { text, time } = req.body;
 
-    // req.user is now available because we used 'isAuthenticated'
+    if (!text) {
+        return next(new ErrorHandler("Message text is required!", 400));
+    }
+
+    // This creates the record using the credentials of whoever is logged in
     const message = await ChatMessage.create({
         sender: req.user._id,
         senderId: req.user._id,
         senderName: `${req.user.firstName} ${req.user.lastName}`,
-        role: req.user.role, // Automatically picks 'Doctor', 'Chemist', etc.
+        role: req.user.role, 
         text,
         time,
     });
