@@ -27,12 +27,13 @@ io.on("connection", (socket) => {
   console.log("User Connected:", socket.id);
 
   // 1. Existing Send Message Logic
-  socket.on("send_message", async (data) => {
+ socket.on("send_message", async (data) => {
     try {
       const savedMessage = await ChatMessage.create({
-        sender: data.senderId,
+        sender: data.senderId, // Matches the ObjectId ref
         senderId: data.senderId,
         senderName: data.senderName,
+        role: data.role,      // <--- ADD THIS LINE
         text: data.text,
         time: data.time,
       });
@@ -40,8 +41,7 @@ io.on("connection", (socket) => {
     } catch (error) {
       console.error("CHAT ERROR:", error.message);
     }
-  });
-
+});
   // 2. NEW: Admin/User Delete Logic
   socket.on("delete_message", async (messageId) => {
     try {
