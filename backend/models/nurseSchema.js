@@ -17,7 +17,7 @@ const nurseSchema = new mongoose.Schema({
         ref: "Hospital",
         required: [true, "Nurse must be assigned to a hospital"],
     },
-    department: {
+   department: {
         type: String,
         required: true,
         enum: ["ICU", "Emergency", "Pediatrics", "General Ward", "Operation Theater", "Internist",
@@ -34,5 +34,6 @@ const nurseSchema = new mongoose.Schema({
     shift: { type: String, required: true, enum: ["Morning", "Evening", "Night"] },
     emergencyContact: { type: String, required: true }
 }, { timestamps: true });
+
 
 export const Nurse = mongoose.model("Nurse", nurseSchema);
